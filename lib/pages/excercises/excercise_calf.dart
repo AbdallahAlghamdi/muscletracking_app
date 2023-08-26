@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:muscletracking_app/Components/loading_circle.dart';
 import 'package:unicons/unicons.dart';
+import 'package:http/http.dart' as http;
 
 class ExcerciseCalf extends StatefulWidget {
   const ExcerciseCalf({super.key});
@@ -10,7 +13,53 @@ class ExcerciseCalf extends StatefulWidget {
 }
 
 class _ExcerciseCalfState extends State<ExcerciseCalf> {
+  Map<String, dynamic> makeJson() {
+    var numbers = [214, 253, 411];
+    Map<String, dynamic> finalJson = {};
+
+    finalJson["account_number"] = 555;
+    finalJson["average_data"] = 2142;
+    finalJson["muscle_group"] = 'Thigh';
+    finalJson["raw_data"] = numbers;
+    return finalJson;
+  }
+
+  sendData() async {
+    var url = Uri.http('10.0.2.2:5000', '/newExcercise');
+    var response = await http.post(url,
+        body: jsonEncode(makeJson()),
+        headers: {"Content-Type": "application/json"});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  loadingCircleLogic() {
+    if (contrl.isPaused) {
+      print('test');
+      setState(() {
+        iconForButton = UniconsLine.pause;
+        buttonName = "Pause";
+      });
+      contrl.resume();
+      return;
+    }
+    if (contrl.isStarted) {
+      contrl.pause();
+      setState(() {
+        iconForButton = UniconsLine.forward;
+        buttonName = "Continue";
+      });
+      return;
+    }
+    contrl.start();
+    setState(() {
+      iconForButton = UniconsLine.pause;
+      buttonName = "Pause";
+    });
+  }
+
   CountDownController contrl = CountDownController();
+
   String buttonName = 'Start';
   int duration = 10;
   IconData iconForButton = UniconsLine.forward;
@@ -20,82 +69,9 @@ class _ExcerciseCalfState extends State<ExcerciseCalf> {
       appBar: AppBar(title: const Text('Excercising the calf')),
       body: Center(
         child: Column(children: [
-          CircularCountDownTimer(
-            duration: duration,
-            initialDuration: 0,
-            controller: contrl,
-            width: MediaQuery.of(context).size.width / 2,
-            height: MediaQuery.of(context).size.height / 2,
-            ringColor: Colors.grey[300]!,
-            ringGradient: null,
-            fillColor: Colors.purpleAccent[100]!,
-            fillGradient: null,
-            backgroundColor: Colors.purple[500],
-            backgroundGradient: null,
-            strokeWidth: 20.0,
-            strokeCap: StrokeCap.round,
-            textStyle: const TextStyle(
-                fontSize: 33.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-            textFormat: duration > 60
-                ? CountdownTextFormat.MM_SS
-                : CountdownTextFormat.S,
-            isReverse: true,
-            isReverseAnimation: false,
-            isTimerTextShown: true,
-            autoStart: false,
-            onStart: () {
-              debugPrint('Countdown Started');
-            },
-            onComplete: () {
-              debugPrint('Countdown Ended');
-            },
-            onChange: (String timeStamp) {
-              debugPrint('Countdown Changed $timeStamp');
-            },
-            timeFormatterFunction: (defaultFormatterFunction, duration) {
-              if (duration.inSeconds == 0) {
-                return '';
-              } else {
-                return Function.apply(defaultFormatterFunction, [duration]);
-              }
-            },
-
-            // CircularPercentIndicator(
-            //   radius: 140,
-            //   lineWidth: 20,
-            //   percent: 0.1,
-            //   progressColor: Colors.deepPurple,
-            //   backgroundColor: Colors.purple.shade100,
-            //   circularStrokeCap: CircularStrokeCap.round,
-            // )
-          ),
+          LoadingCircle(onStart: () {}, onFinish: sendData, contrl: contrl),
           ElevatedButton.icon(
-              onPressed: () {
-                if (contrl.isPaused) {
-                  print('test');
-                  setState(() {
-                    iconForButton = UniconsLine.pause;
-                    buttonName = "Pause";
-                  });
-                  contrl.resume();
-                  return;
-                }
-                if (contrl.isStarted) {
-                  contrl.pause();
-                  setState(() {
-                    iconForButton = UniconsLine.forward;
-                    buttonName = "Continue";
-                  });
-                  return;
-                }
-                contrl.start();
-                setState(() {
-                  iconForButton = UniconsLine.pause;
-                  buttonName = "Pause";
-                });
-              },
+              onPressed: loadingCircleLogic,
               icon: Icon(iconForButton),
               label: Text(buttonName)),
         ]),

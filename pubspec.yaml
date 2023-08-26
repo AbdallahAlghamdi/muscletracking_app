@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   unicons: ^2.1.1
   circular_countdown_timer: ^0.2.3
+  http: ^1.1.0
+  dropdown_button2: ^2.3.8
+  cool_dropdown: ^2.1.0
+  custom_sliding_segmented_control: ^1.7.5
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +68,7 @@ flutter:
   assets:
     - lib/images/
     - lib/excercise_data/
+    - lib/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

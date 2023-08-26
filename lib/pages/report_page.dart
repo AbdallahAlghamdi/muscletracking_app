@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:muscletracking_app/Components/sliding_buttons.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -9,34 +9,15 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  something() async {
-    String response =
-        await rootBundle.loadString('lib/excercise_data/numbers.txt');
-    setState(() {
-      textFromFile = response;
-    });
-  }
-
-  String textFromFile = 'dataEmpty';
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(textFromFile),
-        ElevatedButton(onPressed: something, child: Text('Get Text'))
-      ],
+    return SafeArea(
+      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const SizedBox(height: 20),
+        const Text('Select muscle group'),
+        const SizedBox(height: 20),
+        SlidingButtons(passedFunction: (int a) {})
+      ]),
     );
   }
 }
-
-
-/*
-const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('this is the report page'),
-        Icon(Icons.area_chart_rounded)
-      ],
-    );
-*/

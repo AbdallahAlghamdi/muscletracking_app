@@ -1,5 +1,4 @@
 import 'package:muscletracking_app/pages/excercise_page.dart';
-import 'package:muscletracking_app/pages/excercises/excercise_calf.dart';
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/pages/report_page.dart';
 import 'package:muscletracking_app/pages/settings_page.dart';
