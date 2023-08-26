@@ -11,7 +11,7 @@ class ImageButtonA extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: InkWell(
         onTap: functionPassed, // Handle your callback.
-        splashColor: Colors.brown.withOpacity(0.5),
+        splashColor: Colors.deepPurple.withOpacity(0.5),
         child: Ink(
           height: 135,
           width: 135,
@@ -21,7 +21,7 @@ class ImageButtonA extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               border: Border.all(
-                  width: 3, color: const Color.fromARGB(255, 204, 204, 204)),
+                  width: 3, color: const Color.fromARGB(255, 208, 196, 230)),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
         ),
       ),

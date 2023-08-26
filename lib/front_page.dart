@@ -30,13 +30,26 @@ class _FrontPageState extends State<FrontPage> {
           currentIndex: currentIndexBottomBar,
           items: const [
             BottomNavigationBarItem(
-                label: 'Report', icon: Icon(UniconsLine.chart)),
+                label: 'Report',
+                icon: Icon(
+                  UniconsLine.chart,
+                  color: Colors.deepPurple,
+                )),
             BottomNavigationBarItem(
-                label: 'WorkOut', icon: Icon(UniconsLine.dumbbell)),
+                label: 'WorkOut',
+                icon: Icon(
+                  UniconsLine.dumbbell,
+                  color: Colors.deepPurple,
+                )),
             BottomNavigationBarItem(
-                label: 'Settings', icon: Icon(UniconsLine.setting)),
+                label: 'Settings',
+                icon: Icon(
+                  UniconsLine.setting,
+                  color: Colors.deepPurple,
+                )),
           ],
           onTap: changePage,
+          selectedItemColor: Colors.deepPurpleAccent,
         ));
   }
 }

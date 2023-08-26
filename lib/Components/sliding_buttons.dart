@@ -8,28 +8,27 @@ class SlidingButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSlidingSegmentedControl<int>(
-      initialValue: 2,
       children: {
-        1: Image.asset(
+        0: Image.asset(
           'lib/icons/bicep.png',
           height: 30,
         ),
-        2: Image.asset(
+        1: Image.asset(
           'lib/icons/leg.png',
           height: 30,
         ),
-        3: Image.asset(
+        2: Image.asset(
           'lib/icons/forearm.png',
           height: 30,
         ),
-        4: Image.asset(
+        3: Image.asset(
           'lib/icons/quad.png',
           height: 30,
         ),
       },
       onValueChanged: passedFunction,
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Colors.deepPurpleAccent,
         borderRadius: BorderRadius.circular(8),
       ),
       thumbDecoration: BoxDecoration(
