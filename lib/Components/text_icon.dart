@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class TextIcon extends StatelessWidget {
   final String text;
-  final Widget icon;
-  TextIcon({super.key, required this.text, required this.icon});
+  final IconData icon;
+  const TextIcon({super.key, required this.text, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,8 @@ class TextIcon extends StatelessWidget {
         children: [
           TextSpan(text: text),
           WidgetSpan(
-            child:
-                Padding(padding: const EdgeInsets.only(left: 7), child: icon),
+            child: Padding(
+                padding: const EdgeInsets.only(left: 7), child: Icon(icon)),
           ),
         ],
       ),
