@@ -1,13 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/Components/sliding_buttons.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:muscletracking_app/Components/text_icon.dart';
 import 'package:unicons/unicons.dart';
-import 'package:win_toast/win_toast.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -20,31 +19,35 @@ class _ReportPageState extends State<ReportPage> {
   getAvgData() async {
     var url = Uri.http(
         '127.0.0.1:5000', 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
-    var response = await http.get(url);
-    print('getavg/555/${muscleSelectedGroup.toUpperCase()}');
-    //print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
-    var body = jsonDecode(response.body);
-    print(response.statusCode);
-    if (response.statusCode == 401) {
-      if (mounted) {
-        setState(() {
-          isError = true;
-        });
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 401) {
+        if (mounted) {
+          setState(() {
+            isErrorData = true;
+          });
+        }
+        return;
       }
-
+      var body = jsonDecode(response.body);
+      for (var word in body) {
+        setState(() {
+          data.add(word['average_data']);
+        });
+        if (mounted) {
+          setState(() {
+            isErrorData = false;
+          });
+        }
+      }
       return;
-    }
-    for (var word in body) {
+    } on SocketException {
+      print("no internet");
       setState(() {
-        data.add(word['average_data']);
+        isNotConnected = true;
       });
-      if (mounted) {
-        setState(() {
-          isError = true;
-        });
-      }
     }
+    isNotConnected = true;
   }
 
   @override
@@ -55,7 +58,8 @@ class _ReportPageState extends State<ReportPage> {
     super.initState();
   }
 
-  bool isError = false;
+  bool isErrorData = false;
+  bool isNotConnected = false;
   List<double> data = [];
   String muscleSelectedGroup = "Bicep";
   @override
@@ -84,7 +88,8 @@ class _ReportPageState extends State<ReportPage> {
             if (mounted) {
               data = [];
             }
-            isError = false;
+            isNotConnected = false;
+            isErrorData = false;
             muscleSelectedGroup;
           });
           getAvgData();
@@ -105,10 +110,15 @@ class _ReportPageState extends State<ReportPage> {
             )),
         SizedBox(height: 20),
         Visibility(
-          visible: isError,
+          visible: isErrorData,
           child: const TextIcon(
               text: 'Error, No data found',
               icon: UniconsLine.file_question_alt),
+        ),
+        Visibility(
+          visible: isNotConnected,
+          child: const TextIcon(
+              text: 'Error, No internet', icon: UniconsLine.wifi_slash),
         )
       ]),
     );
