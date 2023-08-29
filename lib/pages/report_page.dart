@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:muscletracking_app/Components/graph_dart.dart';
 import 'package:muscletracking_app/Components/sliding_buttons.dart';
-import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:http/http.dart' as http;
 import 'package:muscletracking_app/Components/text_icon.dart';
+import 'package:muscletracking_app/pages/detailed_report.dart';
 import 'package:unicons/unicons.dart';
 
 class ReportPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  //----Functions
   getAvgData() async {
     var url = Uri.http(
         '127.0.0.1:5000', 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
@@ -37,6 +39,7 @@ class _ReportPageState extends State<ReportPage> {
         if (mounted) {
           setState(() {
             isErrorData = false;
+            isDetails = true;
           });
         }
       }
@@ -47,7 +50,44 @@ class _ReportPageState extends State<ReportPage> {
         isNotConnected = true;
       });
     }
-    isNotConnected = true;
+  }
+
+  goToDetails() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => DetailedReport(
+                muscleGroup: muscleSelectedGroup,
+                accountNumber: 555,
+              )),
+    );
+  }
+
+  slidingButtonFunction(int index) {
+    switch (index) {
+      case 0:
+        muscleSelectedGroup = "Bicep";
+        break;
+      case 1:
+        muscleSelectedGroup = "Calf";
+        break;
+      case 2:
+        muscleSelectedGroup = "Forearm";
+        break;
+      case 3:
+        muscleSelectedGroup = "Thigh";
+        break;
+    }
+    setState(() {
+      if (mounted) {
+        data = [];
+      }
+      isNotConnected = false;
+      isErrorData = false;
+      muscleSelectedGroup;
+      isDetails = false;
+    });
+    getAvgData();
   }
 
   @override
@@ -58,10 +98,13 @@ class _ReportPageState extends State<ReportPage> {
     super.initState();
   }
 
+  //---Variables--
   bool isErrorData = false;
   bool isNotConnected = false;
+  bool isDetails = false;
   List<double> data = [];
   String muscleSelectedGroup = "Bicep";
+  //-------------
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -69,46 +112,12 @@ class _ReportPageState extends State<ReportPage> {
         const SizedBox(height: 20),
         const Text('Select muscle group'),
         const SizedBox(height: 20),
-        SlidingButtons(passedFunction: (int index) {
-          switch (index) {
-            case 0:
-              muscleSelectedGroup = "Bicep";
-              break;
-            case 1:
-              muscleSelectedGroup = "Calf";
-              break;
-            case 2:
-              muscleSelectedGroup = "Forearm";
-              break;
-            case 3:
-              muscleSelectedGroup = "Thigh";
-              break;
-          }
-          setState(() {
-            if (mounted) {
-              data = [];
-            }
-            isNotConnected = false;
-            isErrorData = false;
-            muscleSelectedGroup;
-          });
-          getAvgData();
-        }),
+        SlidingButtons(passedFunction: slidingButtonFunction),
         const SizedBox(height: 20),
         Text(muscleSelectedGroup),
         const SizedBox(height: 20),
-        SizedBox(
-            width: 300.0,
-            height: 200.0,
-            child: Sparkline(
-              pointsMode: PointsMode.all,
-              data: data,
-              averageLine: true,
-              useCubicSmoothing: true,
-              cubicSmoothingFactor: 0.2,
-              enableGridLines: true,
-            )),
-        SizedBox(height: 20),
+        GraphData(data: data),
+        const SizedBox(height: 20),
         Visibility(
           visible: isErrorData,
           child: const TextIcon(
@@ -119,7 +128,12 @@ class _ReportPageState extends State<ReportPage> {
           visible: isNotConnected,
           child: const TextIcon(
               text: 'Error, No internet', icon: UniconsLine.wifi_slash),
-        )
+        ),
+        Visibility(
+          visible: isDetails,
+          child: ElevatedButton(
+              onPressed: goToDetails, child: const Text('more details')),
+        ),
       ]),
     );
   }
