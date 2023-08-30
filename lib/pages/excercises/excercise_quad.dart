@@ -5,21 +5,21 @@ import 'package:muscletracking_app/Components/loading_circle.dart';
 import 'package:unicons/unicons.dart';
 import 'package:http/http.dart' as http;
 
-class ExcerciseCalf extends StatefulWidget {
-  const ExcerciseCalf({super.key});
+class ExcerciseQuad extends StatefulWidget {
+  const ExcerciseQuad({super.key});
 
   @override
-  State<ExcerciseCalf> createState() => _ExcerciseCalfState();
+  State<ExcerciseQuad> createState() => _ExcerciseQuadState();
 }
 
-class _ExcerciseCalfState extends State<ExcerciseCalf> {
+class _ExcerciseQuadState extends State<ExcerciseQuad> {
   Map<String, dynamic> makeJson() {
     var numbers = [214, 253, 411];
     Map<String, dynamic> finalJson = {};
 
     finalJson["account_number"] = 555;
     finalJson["average_data"] = 2142;
-    finalJson["muscle_group"] = 'CALF';
+    finalJson["muscle_group"] = 'QUAD';
     finalJson["raw_data"] = numbers;
     return finalJson;
   }

@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:muscletracking_app/Components/graph_dart.dart';
+import 'package:unicons/unicons.dart';
 
 class DetailedReport extends StatefulWidget {
   final String muscleGroup;
@@ -30,26 +34,55 @@ class _DetailedReportState extends State<DetailedReport> {
     }
   }
 
+  getExcerciseID() async {
+    int accountNumber = widget.accountNumber;
+    String muscleGroup = widget.muscleGroup.toUpperCase();
+    var url = Uri.http(
+        '127.0.0.1:5000', 'getExcerciseID/$accountNumber/$muscleGroup');
+    var response = await http.get(url);
+    print('getExcerciseID/$accountNumber/$muscleGroup');
+    var body = jsonDecode(response.body);
+    print(body[0]);
+    for (var word in body) {
+      print(word['_id']);
+      setState(() {
+        items.add(CoolDropdownItem(
+            icon: const Icon(UniconsLine.heart_alt),
+            selectedIcon: const Icon(FontAwesomeIcons.heartCircleBolt),
+            label: 'Exercise No. ${word['_id']}',
+            value: "${word['_id']}"));
+      });
+    }
+  }
+
+  populateGraph(int exerciseNumber) async {
+    int accountNumber = widget.accountNumber;
+    var url = Uri.http('127.0.0.1:5000', 'getDetailExercise/$exerciseNumber');
+    var response = await http.get(url);
+    var body = jsonDecode(response.body);
+    print(body[0]);
+    for (var word in body) {
+      print(word['value']);
+      setState(() {
+        data.add(word['value']);
+      });
+    }
+  }
+
+  DropdownController contrl =
+      DropdownController(duration: const Duration(milliseconds: 0));
+  List<CoolDropdownItem<String>> items = [];
+  List<double> data = [];
+  @override
+  void initState() {
+    print(widget.accountNumber);
+    print(widget.muscleGroup);
+    getExcerciseID();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    DropdownController contrl =
-        DropdownController(duration: const Duration(milliseconds: 400));
-    List<CoolDropdownItem<Widget>> items = List.empty();
-
-    getExcerciseID() async {
-      var url = Uri.http('127.0.0.1:5000',
-          'getExcerciseID/$widget.accountNumber/${widget.muscleGroup}');
-      var response = await http.get(url);
-      var body = jsonDecode(response.body);
-
-      for (var word in body) {
-        setState(() {
-          items.add(
-              CoolDropdownItem(label: word['_id'], value: Icon(Icons.abc)));
-        });
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -61,11 +94,19 @@ class _DetailedReportState extends State<DetailedReport> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("data"),
+            const Text("data"),
             CoolDropdown(
                 dropdownList: items,
                 controller: contrl,
-                onChange: (Widget s) {})
+                dropdownItemOptions: const DropdownItemOptions(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween),
+                onChange: (String s) {
+                  contrl.close();
+                  data = [];
+                  populateGraph(int.parse(s));
+                }),
+            const SizedBox(height: 35),
+            GraphData(data: data),
           ],
         ),
       ),
