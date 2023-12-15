@@ -66,7 +66,7 @@ class _ExcerciseQuadState extends State<ExcerciseQuad> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Excercising the calf')),
+      appBar: AppBar(title: const Text('Excercising the quad')),
       body: Center(
         child: Column(children: [
           LoadingCircle(onStart: () {}, onFinish: sendData, contrl: contrl),

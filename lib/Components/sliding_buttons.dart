@@ -3,28 +3,26 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 
 class SlidingButtons extends StatelessWidget {
   final Function(int) passedFunction;
-  const SlidingButtons({super.key, required this.passedFunction});
+  final Map<int, Image> elements;
+  int? intialValue;
+  SlidingButtons(
+      {super.key,
+      required this.passedFunction,
+      required this.elements,
+      this.intialValue});
 
   @override
   Widget build(BuildContext context) {
-    const double iconSize = 35;
     return CustomSlidingSegmentedControl<int>(
-      initialValue: 0,
-      children: {
-        0: Image.asset('lib/icons/bicep.png',
-            height: iconSize, isAntiAlias: true),
-        1: Image.asset('lib/icons/leg.png',
-            height: iconSize, isAntiAlias: true),
-        2: Image.asset('lib/icons/forearm.png',
-            height: iconSize, isAntiAlias: true),
-        3: Image.asset('lib/icons/quad.png',
-            height: iconSize, isAntiAlias: true),
-      },
+      isStretch: true,
+      initialValue: intialValue,
+      children: elements,
       onValueChanged: passedFunction,
       decoration: BoxDecoration(
-        color: Colors.deepPurpleAccent,
-        borderRadius: BorderRadius.circular(8),
-      ),
+          color: Colors.deepPurpleAccent,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(width: 2, color: Colors.deepPurpleAccent)),
+      duration: const Duration(milliseconds: 300),
       thumbDecoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(6),

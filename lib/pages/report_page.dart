@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/Components/graph_dart.dart';
+import 'package:muscletracking_app/Components/patient_condition.dart';
 import 'package:muscletracking_app/Components/sliding_buttons.dart';
 import 'package:http/http.dart' as http;
 import 'package:muscletracking_app/Components/text_icon.dart';
 import 'package:muscletracking_app/pages/detailed_report.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
 class ReportPage extends StatefulWidget {
@@ -19,8 +22,8 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   //----Functions
   getAvgData() async {
-    var url = Uri.http(
-        '127.0.0.1:5000', 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
+    var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
+        'getavg/555/${muscleSelectedGroup.toUpperCase()}');
     try {
       var response = await http.get(url);
       if (response.statusCode == 401) {
@@ -31,6 +34,7 @@ class _ReportPageState extends State<ReportPage> {
         }
         return;
       }
+      print(response.body);
       var body = jsonDecode(response.body);
       for (var word in body) {
         setState(() {
@@ -90,10 +94,27 @@ class _ReportPageState extends State<ReportPage> {
     getAvgData();
   }
 
+  void getCurrentAccountType() async {
+    print("getting account type");
+    final SharedPreferences userPreferences =
+        await SharedPreferences.getInstance();
+
+    String accountType = userPreferences.get('account_type').toString();
+    if (accountType == 'Patient') {
+      isPatient = true;
+      showGraph = false;
+    } else {
+      showGraph = true;
+      isPatient = false;
+    }
+  }
+
   @override
   void initState() {
     print('initstate');
+    getCurrentAccountType();
     getAvgData();
+
     // TODO: implement initState
     super.initState();
   }
@@ -102,39 +123,75 @@ class _ReportPageState extends State<ReportPage> {
   bool isErrorData = false;
   bool isNotConnected = false;
   bool isDetails = false;
+  bool isPatient = false;
   List<double> data = [];
   String muscleSelectedGroup = "Bicep";
+  bool showGraph = false;
   //-------------
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const SizedBox(height: 20),
-        const Text('Select muscle group'),
-        const SizedBox(height: 20),
-        SlidingButtons(passedFunction: slidingButtonFunction),
-        const SizedBox(height: 20),
-        Text(muscleSelectedGroup),
-        const SizedBox(height: 20),
-        GraphData(data: data),
-        const SizedBox(height: 20),
-        Visibility(
-          visible: isErrorData,
-          child: const TextIcon(
-              text: 'Error, No data found',
-              icon: UniconsLine.file_question_alt),
-        ),
-        Visibility(
-          visible: isNotConnected,
-          child: const TextIcon(
-              text: 'Error, No internet', icon: UniconsLine.wifi_slash),
-        ),
-        Visibility(
-          visible: isDetails,
-          child: ElevatedButton(
-              onPressed: goToDetails, child: const Text('more details')),
-        ),
-      ]),
+      child: SizedBox(
+        width: 270,
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const SizedBox(height: 20),
+          Text('Select muscle group',
+              style: GoogleFonts.abel(fontSize: 27, color: Colors.black)),
+          const SizedBox(height: 20),
+          SlidingButtons(
+            passedFunction: slidingButtonFunction,
+            elements: {
+              0: Image.asset('lib/icons/bicep.png'),
+              1: Image.asset('lib/icons/leg.png'),
+              2: Image.asset('lib/icons/forearm.png'),
+              3: Image.asset('lib/icons/quad.png')
+            },
+          ),
+          const SizedBox(height: 20),
+          Text(
+            muscleSelectedGroup,
+            style: GoogleFonts.abel(fontSize: 27, color: Colors.black),
+          ),
+          Visibility(
+            visible: showGraph,
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                GraphData(data: data),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Visibility(
+            visible: isErrorData,
+            child: const TextIcon(
+                text: 'Error, No data found',
+                icon: UniconsLine.file_question_alt),
+          ),
+          Visibility(
+            visible: isNotConnected,
+            child: const TextIcon(
+                text: 'Error, No internet', icon: UniconsLine.wifi_slash),
+          ),
+          Visibility(
+            visible: isDetails && showGraph,
+            child: TextButton(
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                        Colors.deepPurpleAccent)),
+                onPressed: goToDetails,
+                child: const Text(
+                  'More details',
+                  style: TextStyle(color: Colors.white),
+                )),
+          ),
+          Visibility(
+              visible: isPatient,
+              child: PatientCondition(
+                  style: GoogleFonts.abel(fontSize: 20, color: Colors.white)))
+        ]),
+      ),
     );
   }
 }

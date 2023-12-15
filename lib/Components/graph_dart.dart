@@ -7,17 +7,23 @@ class GraphData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         width: 300.0,
         height: 200.0,
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(width: 6, color: Colors.deepPurpleAccent),
+        ),
         child: Sparkline(
+          lineColor: Colors.deepPurpleAccent,
           pointsMode: PointsMode.all,
           data: data,
           useCubicSmoothing: true,
           cubicSmoothingFactor: 0.2,
           enableGridLines: true,
-          gridLineAmount: 7,
-          gridLineWidth: 1,
+          gridLineAmount: 9,
+          gridLineWidth: 2,
           gridLineColor: Colors.grey,
         ));
   }

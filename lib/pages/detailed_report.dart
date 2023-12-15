@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +36,8 @@ class _DetailedReportState extends State<DetailedReport> {
   getExcerciseID() async {
     int accountNumber = widget.accountNumber;
     String muscleGroup = widget.muscleGroup.toUpperCase();
-    var url = Uri.http(
-        '127.0.0.1:5000', 'getExcerciseID/$accountNumber/$muscleGroup');
+    var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
+        'getExcerciseID/$accountNumber/$muscleGroup');
     var response = await http.get(url);
     print('getExcerciseID/$accountNumber/$muscleGroup');
     var body = jsonDecode(response.body);
@@ -57,7 +56,8 @@ class _DetailedReportState extends State<DetailedReport> {
 
   populateGraph(int exerciseNumber) async {
     int accountNumber = widget.accountNumber;
-    var url = Uri.http('127.0.0.1:5000', 'getDetailExercise/$exerciseNumber');
+    var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
+        'getDetailExercise/$exerciseNumber');
     var response = await http.get(url);
     var body = jsonDecode(response.body);
     print(body[0]);

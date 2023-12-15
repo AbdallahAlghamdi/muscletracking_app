@@ -45,6 +45,11 @@ dependencies:
   dropdown_search: ^5.0.6
   mirai_dropdown_menu: ^0.0.6+2
   font_awesome_flutter: ^10.5.0
+  shared_preferences: ^2.2.1
+  google_fonts: ^6.1.0
+  flutter_inset_box_shadow: ^1.0.8
+  fl_chart: ^0.64.0
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +78,7 @@ flutter:
     - lib/images/
     - lib/excercise_data/
     - lib/icons/
+    - lib/icons/reactions/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
