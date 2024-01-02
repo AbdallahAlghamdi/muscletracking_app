@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:muscletracking_app/Components/graph_dart.dart';
+import 'package:muscletracking_app/componets/graph_dart.dart';
 import 'package:unicons/unicons.dart';
 
 class DetailedReport extends StatefulWidget {
@@ -55,7 +55,6 @@ class _DetailedReportState extends State<DetailedReport> {
   }
 
   populateGraph(int exerciseNumber) async {
-    int accountNumber = widget.accountNumber;
     var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
         'getDetailExercise/$exerciseNumber');
     var response = await http.get(url);

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:muscletracking_app/pages/report_page.dart';
 import 'package:muscletracking_app/pages/settings_page.dart';
 import 'package:muscletracking_app/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
 class FrontPage extends StatefulWidget {

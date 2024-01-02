@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muscletracking_app/Components/graph_dart.dart';
-import 'package:muscletracking_app/Components/patient_condition.dart';
-import 'package:muscletracking_app/Components/sliding_buttons.dart';
 import 'package:http/http.dart' as http;
-import 'package:muscletracking_app/Components/text_icon.dart';
+import 'package:muscletracking_app/componets/graph_dart.dart';
+import 'package:muscletracking_app/componets/patient_condition.dart';
+import 'package:muscletracking_app/componets/sliding_buttons.dart';
+import 'package:muscletracking_app/componets/text_icon.dart';
 import 'package:muscletracking_app/pages/detailed_report.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';

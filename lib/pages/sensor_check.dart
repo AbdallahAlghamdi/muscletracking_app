@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muscletracking_app/pages/exercise_session.dart';
-import 'package:lottie/lottie.dart';
-
 import 'package:muscletracking_app/pages/pick_time.dart';
 
 class SensorCheck extends StatefulWidget {
@@ -31,22 +28,35 @@ class _SensorCheckState extends State<SensorCheck> {
 
   goToExerciseSession() {}
 
+  String getTitle() {
+    String firstCharacter = widget.muscleGroup[0];
+    String restOfString = widget.muscleGroup.substring(1).toLowerCase();
+    return firstCharacter + restOfString;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Exercise:  ${widget.muscleGroup.toLowerCase()}"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          "Exercise:  ${getTitle()}",
+          style: const TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.deepPurpleAccent,
         actions: [
           Image.asset(getImage(), width: 40),
-          const SizedBox(
-            width: 20,
-          )
+          const SizedBox(width: 20)
         ],
       ),
       body: SafeArea(
           child: Container(
-        margin: EdgeInsets.all(24),
+        width: double.infinity,
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             Text(
@@ -100,13 +110,6 @@ class _SensorCheckState extends State<SensorCheck> {
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   )),
             ),
-            SizedBox(
-              height: 40,
-            ),
-            Visibility(
-                visible: isSensorReady,
-                child: Lottie.asset('lib/icons/reactions/holding_hands.json',
-                    width: 250))
           ],
         ),
       )),
