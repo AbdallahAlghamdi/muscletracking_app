@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/Components/Buttons/image_button.dart';
-import 'package:muscletracking_app/pages/excercises/excercise_calf.dart';
-import 'package:muscletracking_app/pages/excercises/excercise_bicep.dart';
-import 'package:muscletracking_app/pages/excercises/excercise_quad.dart';
-import 'package:muscletracking_app/pages/excercises/excercise_forearm.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:muscletracking_app/pages/sensor_check.dart';
 import 'package:muscletracking_app/utils/colors.dart';

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/pages/exercise_session.dart';
+import 'package:lottie/lottie.dart';
+
 import 'package:muscletracking_app/pages/pick_time.dart';
 
 class SensorCheck extends StatefulWidget {
@@ -44,8 +46,7 @@ class _SensorCheckState extends State<SensorCheck> {
       ),
       body: SafeArea(
           child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(15),
+        margin: EdgeInsets.all(24),
         child: Column(
           children: [
             Text(
@@ -98,7 +99,14 @@ class _SensorCheckState extends State<SensorCheck> {
                     'Ready',
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   )),
-            )
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Visibility(
+                visible: isSensorReady,
+                child: Lottie.asset('lib/icons/reactions/holding_hands.json',
+                    width: 250))
           ],
         ),
       )),
