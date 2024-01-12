@@ -11,6 +11,15 @@ class PickTime extends StatefulWidget {
 class PickTimeState extends State<PickTime> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('data'),
+          ],
+        ),
+      ),
+    );
   }
 }

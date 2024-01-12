@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 
+// ignore: must_be_immutable
 class SlidingButtons extends StatelessWidget {
   final Function(int) passedFunction;
   final Map<int, Image> elements;

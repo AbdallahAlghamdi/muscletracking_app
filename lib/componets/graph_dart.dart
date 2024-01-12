@@ -10,7 +10,7 @@ class GraphData extends StatelessWidget {
     return Container(
         width: 300.0,
         height: 200.0,
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           border: Border.all(width: 6, color: Colors.deepPurpleAccent),

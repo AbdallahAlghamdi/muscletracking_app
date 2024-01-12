@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:muscletracking_app/componets/text_icon.dart';
 import 'package:muscletracking_app/pages/pick_time.dart';
+import 'package:muscletracking_app/utils/video_app.dart';
 
 class SensorCheck extends StatefulWidget {
   final String muscleGroup;
@@ -104,11 +107,58 @@ class _SensorCheckState extends State<SensorCheck> {
                           builder: (context) =>
                               PickTime(muscleGroup: widget.muscleGroup)),
                     );
+                    // showModalBottomSheet(
+                    //     showDragHandle: true,
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return SizedBox(
+                    //         height: 200,
+                    //         child: Center(
+                    //           child: Container(
+                    //             margin: const EdgeInsets.only(
+                    //                 left: 10, right: 10, top: 10, bottom: 25),
+                    //             child: VideoApp(videoName: widget.muscleGroup),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     });
                   },
                   child: const Text(
                     'Ready',
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   )),
+            ),
+            Container(
+              margin: const EdgeInsets.all(25),
+              child: Lottie.asset(isSensorReady
+                  ? "lib/icons/reactions/holding_hands.json"
+                  : "lib/icons/reactions/disappointed.json"),
+            ),
+            Visibility(
+              visible: !isSensorReady,
+              child: ElevatedButton(
+                child: const TextIcon(
+                  icon: Icons.help,
+                  text: "Do you need help?",
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                      showDragHandle: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 200,
+                          child: Center(
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 25),
+                              child: VideoApp(videoName: widget.muscleGroup),
+                            ),
+                          ),
+                        );
+                      });
+                },
+              ),
             ),
           ],
         ),

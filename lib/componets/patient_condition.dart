@@ -53,8 +53,8 @@ class PatientCondition extends StatelessWidget {
               style: style,
             ),
             Container(
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.all(10),
+              margin: const EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.all(10),
               child: GetReaction(avgImprovement),
             )
           ],
