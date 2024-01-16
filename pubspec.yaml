@@ -50,6 +50,7 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   lottie: ^2.7.0
   video_player: ^2.8.2
+  duration_picker: ^1.1.1
   
 
 dev_dependencies:

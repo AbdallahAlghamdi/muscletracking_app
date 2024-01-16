@@ -1,4 +1,8 @@
+import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:muscletracking_app/componets/text_icon.dart';
+import 'package:muscletracking_app/pages/exercise_session.dart';
 
 class PickTime extends StatefulWidget {
   final String muscleGroup;
@@ -8,15 +12,60 @@ class PickTime extends StatefulWidget {
   State<PickTime> createState() => PickTimeState();
 }
 
+Duration exerciseDuration = const Duration();
+bool timeSelected = false;
+
 class PickTimeState extends State<PickTime> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Pick the time! ⏱",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.deepPurpleAccent,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('data'),
+            Lottie.asset('lib/icons/reactions/picktime.json', width: 300),
+            const SizedBox(height: 12),
+            DurationPicker(
+              baseUnit: BaseUnit.second,
+              onChange: (value) {
+                setState(() {
+                  exerciseDuration = value;
+                  if (value.inSeconds > 0) {
+                    timeSelected = true;
+                  } else {
+                    timeSelected = false;
+                  }
+                });
+              },
+              duration: exerciseDuration,
+            ),
+            Visibility(
+                visible: timeSelected,
+                child: TextButton(
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            Colors.deepPurpleAccent)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExerciseSession(
+                                  muscleGroup: widget.muscleGroup,
+                                  exerciseDuration: exerciseDuration,
+                                )),
+                      );
+                    },
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(color: Colors.white, fontSize: 17),
+                    ))),
           ],
         ),
       ),

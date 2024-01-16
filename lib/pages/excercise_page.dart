@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:muscletracking_app/componets/Buttons/image_button.dart';
 import 'package:muscletracking_app/pages/bluetooth_check.dart';
-import 'package:muscletracking_app/pages/sensor_check.dart';
 import 'package:muscletracking_app/utils/colors.dart';
 
 class ExcercisePage extends StatefulWidget {
