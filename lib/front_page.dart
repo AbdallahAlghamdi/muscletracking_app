@@ -1,8 +1,11 @@
-import 'package:muscletracking_app/pages/excercise_page.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/excercise_page.dart';
 import 'package:flutter/material.dart';
+import 'package:muscletracking_app/pages/messages_hub.dart';
 import 'package:muscletracking_app/pages/report_page.dart';
+import 'package:muscletracking_app/pages/reports_page.dart';
 import 'package:muscletracking_app/pages/settings_page.dart';
 import 'package:muscletracking_app/utils/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
 class FrontPage extends StatefulWidget {
@@ -13,7 +16,7 @@ class FrontPage extends StatefulWidget {
 }
 
 class _FrontPageState extends State<FrontPage> {
-  void changePage(int value) {
+  void changePage(int value) async {
     setState(() {
       currentPage = pages[value];
       currentIndexBottomBar = value;
@@ -25,18 +28,23 @@ class _FrontPageState extends State<FrontPage> {
     super.initState();
   }
 
-  final pages = const [ReportPage(), ExcercisePage(), SettingsPage()];
+  final pages = const [
+    ReportsPage(),
+    ExcercisePage(),
+    MessageHub(),
+    SettingsPage()
+  ];
   int currentIndexBottomBar = 1;
   Widget currentPage = const ExcercisePage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(child: currentPage),
+        body: currentPage,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndexBottomBar,
           items: [
             BottomNavigationBarItem(
-                label: 'Report',
+                label: 'Reports',
                 icon: Icon(
                   UniconsLine.chart,
                   color: primaryColor,
@@ -47,6 +55,12 @@ class _FrontPageState extends State<FrontPage> {
                   UniconsLine.dumbbell,
                   color: primaryColor,
                 )),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  UniconsLine.envelope,
+                  color: primaryColor,
+                ),
+                label: "Messages"),
             BottomNavigationBarItem(
                 label: 'Settings',
                 icon: Icon(

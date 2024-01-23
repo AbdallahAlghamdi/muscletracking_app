@@ -2,7 +2,7 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
-import 'package:muscletracking_app/pages/exercise_session.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/exercise_session.dart';
 
 class PickTime extends StatefulWidget {
   final String muscleGroup;
@@ -20,6 +20,11 @@ class PickTimeState extends State<PickTime> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: const Text(
           "Pick the time! ⏱",
           style: TextStyle(color: Colors.white),
@@ -47,25 +52,28 @@ class PickTimeState extends State<PickTime> {
               duration: exerciseDuration,
             ),
             Visibility(
-                visible: timeSelected,
-                child: TextButton(
-                    style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
-                            Colors.deepPurpleAccent)),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ExerciseSession(
-                                  muscleGroup: widget.muscleGroup,
-                                  exerciseDuration: exerciseDuration,
-                                )),
-                      );
-                    },
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(color: Colors.white, fontSize: 17),
-                    ))),
+              visible: timeSelected,
+              child: TextButton(
+                style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                        Colors.deepPurpleAccent)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExerciseSession(
+                        muscleGroup: widget.muscleGroup,
+                        exerciseDuration: exerciseDuration,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Next',
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+              ),
+            ),
           ],
         ),
       ),

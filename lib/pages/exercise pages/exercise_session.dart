@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:muscletracking_app/pages/pick_time.dart';
-import 'package:muscletracking_app/pages/successful_exercise.dart';
+import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/pick_time.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/successful_exercise.dart';
 
 class ExerciseSession extends StatefulWidget {
   final String muscleGroup;
@@ -17,10 +20,37 @@ class ExerciseSession extends StatefulWidget {
 var timeController = CountDownController();
 
 class _ExerciseSessionState extends State<ExerciseSession> {
+  double getAverage(List<int> list) {
+    int totalAmount = 0;
+    for (var i = 0; i < list.length; i++) {
+      totalAmount += list[i];
+    }
+    return totalAmount / list.length;
+  }
+
+  void simulateData(List<int> list) {
+    var randomizer = Random();
+    for (var i = 0; i < 10; i++) {
+      list.add(randomizer.nextInt(400) + 200);
+    }
+  }
+
+  void getValueFromArduino() {
+    List<int> dataFromArduino = [];
+    simulateData(dataFromArduino);
+    newExercise(
+        555, getAverage(dataFromArduino), widget.muscleGroup, dataFromArduino);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: const Text(
           "Time to exercise! 🏋️‍♂️",
           style: TextStyle(color: Colors.white),
@@ -52,6 +82,7 @@ class _ExerciseSessionState extends State<ExerciseSession> {
             ),
             ElevatedButton(
                 onPressed: () {
+                  getValueFromArduino();
                   if (!timeController.isStarted) {
                     setState(() {
                       timeController.start();

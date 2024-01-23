@@ -16,11 +16,7 @@ class SuccessfulExercise extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Lottie.asset(
-              'lib/icons/reactions/paper_message.json',
-            )
-          ],
+          children: [Lottie.asset('lib/icons/reactions/paper_message.json')],
         ),
       ),
     );

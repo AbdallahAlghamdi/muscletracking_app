@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
-import 'package:muscletracking_app/pages/pick_time.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/pick_time.dart';
+import 'package:muscletracking_app/pages/video_page.dart';
 import 'package:muscletracking_app/utils/video_app.dart';
 
 class SensorCheck extends StatefulWidget {
@@ -100,29 +101,7 @@ class _SensorCheckState extends State<SensorCheck> {
                   style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll<Color>(
                           Colors.deepPurpleAccent)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              PickTime(muscleGroup: widget.muscleGroup)),
-                    );
-                    // showModalBottomSheet(
-                    //     showDragHandle: true,
-                    //     context: context,
-                    //     builder: (BuildContext context) {
-                    //       return SizedBox(
-                    //         height: 200,
-                    //         child: Center(
-                    //           child: Container(
-                    //             margin: const EdgeInsets.only(
-                    //                 left: 10, right: 10, top: 10, bottom: 25),
-                    //             child: VideoApp(videoName: widget.muscleGroup),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     });
-                  },
+                  onPressed: () {},
                   child: const Text(
                     'Ready',
                     style: TextStyle(color: Colors.white, fontSize: 17),
@@ -142,21 +121,12 @@ class _SensorCheckState extends State<SensorCheck> {
                   text: "Do you need help?",
                 ),
                 onPressed: () {
-                  showModalBottomSheet(
-                      showDragHandle: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 10, bottom: 25),
-                              child: VideoApp(videoName: widget.muscleGroup),
-                            ),
-                          ),
-                        );
-                      });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            VideoPage(muscleGroup: widget.muscleGroup)),
+                  );
                 },
               ),
             ),

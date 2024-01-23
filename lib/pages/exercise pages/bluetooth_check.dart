@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:muscletracking_app/componets/bluetooth/bluetooth_item.dart';
 import 'package:muscletracking_app/componets/bluetooth/bluetooth_list.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
-import 'package:muscletracking_app/pages/sensor_check.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/sensor_check.dart';
 
 class BluetoothCheck extends StatefulWidget {
   final String muscleGroup;
@@ -94,10 +94,12 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
           Visibility(
               visible: clicked,
               child: Container(
-                margin: EdgeInsets.all(25),
-                child: Lottie.asset(devicesConnected[1]
-                    ? "lib/icons/reactions/holding_hands.json"
-                    : "lib/icons/reactions/disappointed.json"),
+                margin: EdgeInsets.all(15),
+                child: Lottie.asset(
+                    devicesConnected[1]
+                        ? "lib/icons/reactions/holding_hands.json"
+                        : "lib/icons/reactions/disappointed.json",
+                    width: 300),
               )),
           Visibility(
             visible: devicesConnected[1],
@@ -112,26 +114,10 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
           Visibility(
             visible: !devicesConnected[1] && clicked,
             child: Container(
-              margin: const EdgeInsets.all(15),
-              child: RichText(
-                text: const TextSpan(
-                    text: "Oh no! A different ",
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                    children: [
-                      TextSpan(
-                          text: "bluetooth",
-                          style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.bold)),
-                      TextSpan(
-                          text:
-                              " device was connected. make sure you are near the sensor and click '"),
-                      TextSpan(
-                          text: "Muscle sensor",
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold)),
-                      TextSpan(text: "'")
-                    ]),
+              margin: EdgeInsets.all(25),
+              child: const Text(
+                'Wrong device connected! Please make sure to stand next to the sensor and click on "Muscle Sensor"',
+                style: TextStyle(fontSize: 20),
               ),
             ),
           )

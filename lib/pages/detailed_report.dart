@@ -6,6 +6,8 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:muscletracking_app/componets/graph_dart.dart';
+import 'package:muscletracking_app/componets/sliding_buttons.dart';
+import 'package:muscletracking_app/online/database.dart';
 import 'package:unicons/unicons.dart';
 
 class DetailedReport extends StatefulWidget {
@@ -20,6 +22,52 @@ class DetailedReport extends StatefulWidget {
 }
 
 class _DetailedReportState extends State<DetailedReport> {
+  DropdownController contrl =
+      DropdownController(duration: const Duration(milliseconds: 0));
+  List<CoolDropdownItem<String>> items = [];
+  List<double> data = [];
+  bool showGraph = false;
+
+  String duration = 'd';
+  getExcerciseID() async {
+    print("Started");
+    List<int> tempData = [];
+    tempData =
+        await getExerciseID(widget.accountNumber, widget.muscleGroup, duration);
+
+    for (var word in tempData) {
+      setState(() {
+        items.add(CoolDropdownItem(
+            icon: const Icon(UniconsLine.heart_alt),
+            selectedIcon: const Icon(FontAwesomeIcons.heartCircleBolt),
+            label: 'Exercise No. $word',
+            value: "$word"));
+      });
+    }
+    print("closed");
+  }
+
+  slidingDurationButtons(int index) {
+    setState(() {
+      items = [];
+      switch (index) {
+        case 0:
+          duration = "d";
+          break;
+        case 1:
+          duration = "w";
+          break;
+        case 2:
+          duration = "m";
+          break;
+        case 3:
+          duration = "y";
+          break;
+      }
+    });
+    getExcerciseID();
+  }
+
   getIcon() {
     switch (widget.muscleGroup.toUpperCase()) {
       case "THIGH":
@@ -33,45 +81,26 @@ class _DetailedReportState extends State<DetailedReport> {
     }
   }
 
-  getExcerciseID() async {
-    int accountNumber = widget.accountNumber;
-    String muscleGroup = widget.muscleGroup.toUpperCase();
-    var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
-        'getExcerciseID/$accountNumber/$muscleGroup');
-    var response = await http.get(url);
-    print('getExcerciseID/$accountNumber/$muscleGroup');
-    var body = jsonDecode(response.body);
-    print(body[0]);
-    for (var word in body) {
-      print(word['_id']);
-      setState(() {
-        items.add(CoolDropdownItem(
-            icon: const Icon(UniconsLine.heart_alt),
-            selectedIcon: const Icon(FontAwesomeIcons.heartCircleBolt),
-            label: 'Exercise No. ${word['_id']}',
-            value: "${word['_id']}"));
-      });
-    }
-  }
-
   populateGraph(int exerciseNumber) async {
-    var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
-        'getDetailExercise/$exerciseNumber');
-    var response = await http.get(url);
-    var body = jsonDecode(response.body);
-    print(body[0]);
-    for (var word in body) {
-      print(word['value']);
-      setState(() {
-        data.add(word['value']);
-      });
-    }
+    var tempData = await getDetailedExercise(exerciseNumber);
+    setState(() {
+      showGraph = true;
+      data = tempData;
+    });
+    // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
+    //     'getDetailExercise/$exerciseNumber');
+    // var response = await http.get(url);
+    // var body = jsonDecode(response.body);
+    // print(body[0]);
+    // for (var word in body) {
+    //   print(word['value']);
+    //   int val = word['value'];
+    //   setState(() {
+    //     data.add(val.toDouble());
+    //   });
+    // }
   }
 
-  DropdownController contrl =
-      DropdownController(duration: const Duration(milliseconds: 0));
-  List<CoolDropdownItem<String>> items = [];
-  List<double> data = [];
   @override
   void initState() {
     print(widget.accountNumber);
@@ -84,29 +113,51 @@ class _DetailedReportState extends State<DetailedReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurpleAccent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [getIcon()],
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("data"),
-            CoolDropdown(
-                dropdownList: items,
-                controller: contrl,
-                dropdownItemOptions: const DropdownItemOptions(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween),
-                onChange: (String s) {
-                  contrl.close();
-                  data = [];
-                  populateGraph(int.parse(s));
-                }),
-            const SizedBox(height: 35),
-            GraphData(data: data),
-          ],
+        child: SafeArea(
+          child: SizedBox(
+            width: 270,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SlidingButtons(
+                  passedFunction: slidingDurationButtons,
+                  elements: {
+                    0: Image.asset('lib/icons/day.png'),
+                    1: Image.asset('lib/icons/week.png'),
+                    2: Image.asset('lib/icons/month.png'),
+                    3: Image.asset('lib/icons/year.png')
+                  },
+                ),
+                SizedBox(height: 20),
+                CoolDropdown(
+                    dropdownList: items,
+                    controller: contrl,
+                    dropdownItemOptions: const DropdownItemOptions(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween),
+                    onChange: (String s) {
+                      data = [];
+                      contrl.close();
+
+                      showGraph = true;
+                      populateGraph(int.parse(s));
+                    }),
+                const SizedBox(height: 35),
+                Visibility(visible: showGraph, child: GraphData(data: data)),
+              ],
+            ),
+          ),
         ),
       ),
     );
