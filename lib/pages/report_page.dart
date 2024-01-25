@@ -186,17 +186,17 @@ class _ReportPageState extends State<ReportPage> {
               ),
             ),
             const SizedBox(height: 20),
-            Visibility(
-              visible: isErrorData && !isPatient,
-              child: const TextIcon(
-                  text: 'Error, No data found',
-                  icon: UniconsLine.file_question_alt),
-            ),
-            Visibility(
-              visible: isNotConnected,
-              child: const TextIcon(
-                  text: 'Error, No internet', icon: UniconsLine.wifi_slash),
-            ),
+            // Visibility(
+            //   visible: isErrorData && !isPatient,
+            //   child: const TextIcon(
+            //       text: 'Error, No data found',
+            //       icon: UniconsLine.file_question_alt),
+            // ),
+            // Visibility(
+            //   visible: isNotConnected,
+            //   child: const TextIcon(
+            //       text: 'Error, No internet', icon: UniconsLine.wifi_slash),
+            // ),
             Visibility(
               visible: isDetails && showGraph,
               child: TextButton(

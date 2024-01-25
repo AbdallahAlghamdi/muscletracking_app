@@ -52,13 +52,15 @@ class _ReportsPageState extends State<ReportsPage> {
     final SharedPreferences userPreferences =
         await SharedPreferences.getInstance();
 
-    String accountType = userPreferences.get('account_type').toString();
+    String accountType =
+        await userPreferences.getString('account_type').toString();
+    var accountNumber = await userPreferences.getInt('account_number');
     setState(() {
       print(accountType);
-      isloaded = true;
-      if (accountType == "Patient") {
+      if (accountType == 'patient') {
         isPatient = true;
-        patientID = 555; //Change this
+        patientID = accountNumber!.toInt(); //Change this
+        isloaded = true;
         getAvgMuscleData();
       } else {
         isPatient = false;

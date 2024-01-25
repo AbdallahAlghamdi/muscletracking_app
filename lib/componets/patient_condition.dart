@@ -42,7 +42,7 @@ class PatientCondition extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 400,
+      height: 350,
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.only(bottom: 40),
       decoration: BoxDecoration(

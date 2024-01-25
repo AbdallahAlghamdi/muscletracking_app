@@ -62,10 +62,10 @@ class _PhysicianReportState extends State<PhysicianReport> {
                 3: Image.asset('lib/icons/quad.png')
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(widget.muscleSelectedGroup,
                 style: GoogleFonts.abel(fontSize: 27, color: Colors.black)),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             SlidingButtons(
               passedFunction: widget.slidingDurationButtons,
               elements: {
@@ -82,15 +82,20 @@ class _PhysicianReportState extends State<PhysicianReport> {
         visible: widget.showGraph,
         child: Column(
           children: [
-            const SizedBox(height: 40),
-            GraphData(data: widget.data),
             const SizedBox(height: 20),
+            GraphData(data: widget.data),
+            const SizedBox(height: 10),
             Visibility(
               visible: widget.isDataAvaliable,
               child: ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.deepPurpleAccent)),
                   onPressed: widget.goToDetails,
                   child: const TextIcon(
-                      text: 'Details', icon: UniconsLine.document_info)),
+                      text: Text("Details",
+                          style: TextStyle(color: Colors.white)),
+                      icon: UniconsLine.document_info)),
             )
           ],
         ),

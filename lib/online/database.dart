@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:muscletracking_app/componets/login_button.dart';
 import 'package:muscletracking_app/utils/patient.dart';
 
 const String serverURL = '10.0.2.2:5000';
@@ -95,6 +96,22 @@ addPatientByID(int doctorNumber, int patientNumber) async {
   String subDomainName = "addPatient/$doctorNumber/$patientNumber";
   var url = Uri.http(serverURL, subDomainName);
   await http.post(url);
+}
+
+Future<Map<String, dynamic>?> login(String username, String password) async {
+  var tempBody = await getData('/login/$username/$password');
+  if (tempBody == "") {
+    return null;
+  } else {
+    Map<String, dynamic> loginInformation = {};
+    var body = jsonDecode(tempBody);
+    print(body);
+    int account_number = body[0]["account_number"];
+    loginInformation["account_number"] = body[0]["account_number"].toString();
+    loginInformation["status"] = body[0]["_status"];
+    loginInformation["name"] = body[0]["_name"];
+    return loginInformation;
+  }
 }
 
 // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',

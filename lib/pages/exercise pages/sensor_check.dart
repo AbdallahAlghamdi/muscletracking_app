@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
 import 'package:muscletracking_app/pages/exercise%20pages/pick_time.dart';
-import 'package:muscletracking_app/pages/video_page.dart';
-import 'package:muscletracking_app/utils/video_app.dart';
+import 'package:muscletracking_app/pages/exercise%20pages/video_page.dart';
 
 class SensorCheck extends StatefulWidget {
   final String muscleGroup;
@@ -101,7 +100,12 @@ class _SensorCheckState extends State<SensorCheck> {
                   style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll<Color>(
                           Colors.deepPurpleAccent)),
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PickTime(muscleGroup: widget.muscleGroup)),
+                      ),
                   child: const Text(
                     'Ready',
                     style: TextStyle(color: Colors.white, fontSize: 17),
@@ -109,16 +113,20 @@ class _SensorCheckState extends State<SensorCheck> {
             ),
             Container(
               margin: const EdgeInsets.all(25),
-              child: Lottie.asset(isSensorReady
-                  ? "lib/icons/reactions/holding_hands.json"
-                  : "lib/icons/reactions/disappointed.json"),
+              child: Lottie.asset(
+                  isSensorReady
+                      ? "lib/icons/reactions/holding_hands.json"
+                      : "lib/icons/reactions/disappointed.json",
+                  width: 200),
             ),
             Visibility(
               visible: !isSensorReady,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurpleAccent),
                 child: const TextIcon(
                   icon: Icons.help,
-                  text: "Do you need help?",
+                  text: Text("Do you need help?"),
                 ),
                 onPressed: () {
                   Navigator.push(

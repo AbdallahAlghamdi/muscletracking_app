@@ -35,7 +35,7 @@ class PickTimeState extends State<PickTime> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset('lib/icons/reactions/picktime.json', width: 300),
+            Lottie.asset('lib/icons/reactions/picktime.json', width: 200),
             const SizedBox(height: 12),
             DurationPicker(
               baseUnit: BaseUnit.second,

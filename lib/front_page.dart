@@ -1,11 +1,9 @@
 import 'package:muscletracking_app/pages/exercise%20pages/excercise_page.dart';
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/pages/messages_hub.dart';
-import 'package:muscletracking_app/pages/report_page.dart';
 import 'package:muscletracking_app/pages/reports_page.dart';
 import 'package:muscletracking_app/pages/settings_page.dart';
 import 'package:muscletracking_app/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
 class FrontPage extends StatefulWidget {
@@ -39,6 +37,7 @@ class _FrontPageState extends State<FrontPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: currentPage,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndexBottomBar,

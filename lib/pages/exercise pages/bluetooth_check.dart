@@ -99,14 +99,16 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
                     devicesConnected[1]
                         ? "lib/icons/reactions/holding_hands.json"
                         : "lib/icons/reactions/disappointed.json",
-                    width: 300),
+                    width: 200),
               )),
           Visibility(
             visible: devicesConnected[1],
             child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
               onPressed: goToSensorCheck,
               child: const TextIcon(
-                text: "Continue",
+                text: Text("Continue"),
                 icon: FontAwesomeIcons.personWalkingArrowRight,
               ),
             ),
