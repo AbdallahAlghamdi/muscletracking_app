@@ -114,5 +114,13 @@ Future<Map<String, dynamic>?> login(String username, String password) async {
   }
 }
 
+Future<Map<int, String>> getUserRecipients(int account_number) async {
+  Map<int, String> result = {};
+  var body = jsonDecode(await getData('/getRecipients/$account_number'));
+  for (var element in body) {
+    result[element["account_number"]] = element["_name"];
+  }
+  return result;
+}
 // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
         // 'getavg/555/${muscleSelectedGroup.toUpperCase()}');

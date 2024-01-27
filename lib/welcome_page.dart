@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/componets/error_box.dart';
 import 'package:muscletracking_app/componets/login_button.dart';
 import 'package:muscletracking_app/componets/user_input_field.dart';
-import 'package:muscletracking_app/front_page.dart';
 import 'package:muscletracking_app/online/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';

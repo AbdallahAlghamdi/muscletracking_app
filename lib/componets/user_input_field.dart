@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 
 class UserInputField extends StatelessWidget {
   final bool isPassword;

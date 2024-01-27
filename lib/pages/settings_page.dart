@@ -50,15 +50,15 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Column(
               children: [
-                Text("Account type",
-                    style: GoogleFonts.abel(fontSize: 27, color: Colors.black)),
                 const SizedBox(height: 15),
                 Visibility(
                     visible: !isPatient,
                     child: Column(
                       children: [
-                        const TextIcon(
-                          text: Text("Add new patient"),
+                        TextIcon(
+                          text: Text("Add patient",
+                              style: GoogleFonts.abel(
+                                  fontSize: 27, color: Colors.black)),
                           icon: UniconsLine.user,
                         ),
                         const SizedBox(height: 10),
@@ -77,7 +77,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   style: const ButtonStyle(
                       backgroundColor:
                           MaterialStatePropertyAll(Colors.deepPurple)),
-                  child: const Text("Sign out"),
+                  child: const Text(
+                    "Sign out",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 IconButton(
                   onPressed: () {
