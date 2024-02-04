@@ -1,8 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class SuccessfulExercise extends StatelessWidget {
+class SuccessfulExercise extends StatefulWidget {
   const SuccessfulExercise({super.key});
+
+  @override
+  State<SuccessfulExercise> createState() => _SuccessfulExerciseState();
+}
+
+class _SuccessfulExerciseState extends State<SuccessfulExercise> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer(const Duration(seconds: 5), () {
+      Navigator.pushReplacementNamed(context, '/frontPage');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

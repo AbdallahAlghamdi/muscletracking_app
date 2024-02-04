@@ -38,8 +38,8 @@ class _ExerciseSessionState extends State<ExerciseSession> {
   void getValueFromArduino() {
     List<int> dataFromArduino = [];
     simulateData(dataFromArduino);
-    newExercise(
-        555, getAverage(dataFromArduino), widget.muscleGroup, dataFromArduino);
+    newExercise(555, getAverage(dataFromArduino), widget.muscleGroup,
+        dataFromArduino, widget.exerciseDuration.inSeconds);
   }
 
   @override

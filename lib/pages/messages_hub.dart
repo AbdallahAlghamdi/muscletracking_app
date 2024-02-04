@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:muscletracking_app/componets/mail/mail.dart';
+import 'package:muscletracking_app/componets/mail/mail_list.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
-import 'package:muscletracking_app/componets/messaging/message_room.dart';
+import 'package:muscletracking_app/componets/toggle_button_mail.dart';
 import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/pages/send_mail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unicons/unicons.dart';
 
 class MessageHub extends StatefulWidget {
   const MessageHub({super.key});
@@ -13,28 +16,72 @@ class MessageHub extends StatefulWidget {
 }
 
 class _MessageState extends State<MessageHub> {
+  int? accountNumber;
+  List<MessageRecipient> recipients = [];
+  List<Mail> mail = [];
+  String isOutbound = "";
 
-  Future<List<Widget>> getRecipients() async {
-    List<Widget> recipients = [];
+  getRecipients() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    print(preferences.getInt("account_number"));
-    var account_number = preferences.getInt("account_number");
-    if (account_number != null) {
-      Map<int, String> body = await getUserRecipients(account_number);
-        for (var element in body.entries) {
-          // ignore: use_build_context_synchronously
-          recipients.add(MessageRecipient(
-              name: element.value, recipientID: element.key, context: context));
-        }
+    accountNumber = preferences.getInt("account_number");
+    if (accountNumber != null) {
+      Map<int, String> body = await getUserRecipients(accountNumber!);
+      List<MessageRecipient> tempRecipients = [];
+      for (var element in body.entries) {
+        tempRecipients.add(
+            MessageRecipient(name: element.value, recipientID: element.key));
+      }
+      setState(() {
+        recipients = tempRecipients;
+      });
     }
   }
-  Future<List<Widget>> recipients = getRecipients();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getRecipients();
+  }
+
+  getMailMessages(String mailType) async {
+    List<Mail> tempMail = [];
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? accountNumber = preferences.getInt("account_number");
+    String? name = preferences.getString("user_name");
+    if (accountNumber != null && name != null) {
+      if (mailType == "inbox") {
+        tempMail = await getMail(accountNumber, name);
+      } else {
+        tempMail = await getSentMail(accountNumber, name);
+      }
+    }
+    setState(() {
+      mail = tempMail;
+    });
+  }
+
+  toggleButtonChanged(Set<String> p0) {
+    if (p0.isNotEmpty) {
+      setState(() {
+        isOutbound = p0.first;
+        mail = [];
+      });
+
+      getMailMessages(isOutbound);
+    }
+  }
+
+  gotoNewMail() {
+    if (accountNumber != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SendMail(
+                  recipients: recipients,
+                  accountNumber: accountNumber!,
+                )),
+      );
+    }
   }
 
   @override
@@ -42,16 +89,24 @@ class _MessageState extends State<MessageHub> {
     return SafeArea(
       child: Column(
         children: [
-          SizedBox(height: 15),
-          Text('Your messages',
-              style: GoogleFonts.abel(fontSize: 27, color: Colors.black)),
-          SizedBox(height: 15),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (BuildContext context, int index) {},
-            ),
+          ToggleButtonMail(
+              isOutBound: isOutbound, function: toggleButtonChanged),
+          MailList(mail: mail),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Visibility(
+                visible: recipients.isNotEmpty,
+                child: Container(
+                  margin: const EdgeInsets.all(25),
+                  child: FloatingActionButton(
+                    onPressed: gotoNewMail,
+                    backgroundColor: Colors.deepPurple,
+                    child: const Icon(UniconsLine.envelope),
+                  ),
+                ),
+              )
+            ],
           )
         ],
       ),

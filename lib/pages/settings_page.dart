@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muscletracking_app/componets/patient_or_physician.dart';
+import 'package:muscletracking_app/componets/error_box.dart';
+import 'package:muscletracking_app/componets/success_box.dart';
 import 'package:muscletracking_app/componets/text_field_add.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
 import 'package:muscletracking_app/online/database.dart';
@@ -18,7 +19,11 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  String successMessage = "";
+  bool showSuccess = false;
   bool isPatient = true;
+  bool showError = false;
+  String errorMessage = "";
   int accountNumber = 0;
   void getAccountType() async {
     print("getting account type");
@@ -30,6 +35,27 @@ class _SettingsPageState extends State<SettingsPage> {
       setState(() {
         accountNumber = userPreferences.getInt("account_number")!;
         isPatient = false;
+      });
+    }
+  }
+
+  addPatient(String patient) async {
+    if (showError || showSuccess) {
+      setState(() {
+        showError = false;
+        showSuccess = false;
+      });
+    }
+    bool succesful = await addPatientByID(accountNumber, int.parse(patient));
+    if (!succesful) {
+      setState(() {
+        showError = true;
+        errorMessage = "Can't add this patient";
+      });
+    } else {
+      setState(() {
+        showSuccess = true;
+        successMessage = "You added new patient";
       });
     }
   }
@@ -62,9 +88,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           icon: UniconsLine.user,
                         ),
                         const SizedBox(height: 10),
-                        TextFieldAdd(
-                            function: (patient) => addPatientByID(
-                                accountNumber, int.parse(patient))),
+                        TextFieldAdd(function: addPatient),
+                        const SizedBox(height: 25),
+                        ErrorBox(warningMessage: errorMessage, show: showError),
+                        const SizedBox(height: 25),
+                        SuccessBox(
+                            sucesssMessage: successMessage, show: showSuccess)
                       ],
                     )),
               ],

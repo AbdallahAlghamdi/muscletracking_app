@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UserInputField extends StatelessWidget {
   final bool isPassword;
   final IconData icon;
   final String fieldName;
+  final int maxLength;
   final TextEditingController controller;
 
   const UserInputField(
@@ -11,7 +13,8 @@ class UserInputField extends StatelessWidget {
       required this.isPassword,
       required this.icon,
       required this.fieldName,
-      required this.controller});
+      required this.controller,
+      required this.maxLength});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class UserInputField extends StatelessWidget {
       color: const Color.fromARGB(77, 192, 192, 192),
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
       child: TextField(
+        inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
         controller: controller,
         decoration: InputDecoration(
             prefix: Container(
