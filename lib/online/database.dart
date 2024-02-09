@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:muscletracking_app/componets/mail/mail.dart';
 import 'package:muscletracking_app/utils/patient.dart';
+import 'package:muscletracking_app/utils/patient_progress.dart';
 
 const String serverURL = '10.0.2.2:5000';
 // const String serverURL = 'cherubim-w8yy2.ondigitalocean.app';
@@ -239,5 +240,75 @@ Future<int> getNotifications(int accountNumber) async {
 
   return body[0]["_count"];
 }
+
+Future<Map<int, PatientProgress>> getSummaryMilestones(
+    int accountNumber) async {
+  var tempBody = await getData("/getSummary/$accountNumber");
+  if (tempBody.isEmpty) {
+    return {};
+  }
+  var body = jsonDecode(tempBody);
+  Map<int, PatientProgress> patientList = {};
+  for (var element in body) {
+    // print(element);
+    if (!patientList.containsKey(element["account_number"])) {
+      int patientAccountNumber = element["account_number"];
+      String patientName = element["_name"];
+      String muscleGroup = element["muscleGroup"];
+      int passedDuration = element["passedDuration"];
+      int duration = element["duration"];
+      int muscleIndex = 0;
+      switch (muscleGroup) {
+        case "BICEP":
+          muscleIndex = 0;
+          break;
+        case "CALF":
+          muscleIndex = 1;
+          break;
+        case "THIGH":
+          muscleIndex = 2;
+          break;
+        case "FOREARM":
+          muscleIndex = 3;
+          break;
+      }
+      List<int> milestones = [0, 0, 0, 0];
+      List<int> progress = [0, 0, 0, 0];
+      milestones[muscleIndex] = duration;
+      progress[muscleIndex] = passedDuration;
+      patientList[patientAccountNumber] =
+          PatientProgress(milestones, progress, patientName, "weekly");
+    } else {
+      int patientAccountNumber = element["account_number"];
+      PatientProgress tempProgress = patientList[patientAccountNumber]!;
+      String muscleGroup = element["muscleGroup"];
+      int passedDuration = element["passedDuration"];
+      int duration = element["duration"];
+      int muscleIndex = 0;
+      switch (muscleGroup) {
+        case "BICEP":
+          muscleIndex = 0;
+          break;
+        case "CALF":
+          muscleIndex = 1;
+          break;
+        case "THIGH":
+          muscleIndex = 2;
+          break;
+        case "FOREARM":
+          muscleIndex = 3;
+          break;
+      }
+      tempProgress.milestone[muscleIndex] = duration;
+      tempProgress.progress[muscleIndex] = passedDuration;
+      patientList[patientAccountNumber] = tempProgress;
+
+      // print("old patient");
+    }
+  }
+
+  return patientList;
+}
 // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
         // 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
+        

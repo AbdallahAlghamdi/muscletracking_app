@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/componets/Progress_bar.dart';
 import 'package:muscletracking_app/componets/mail/mail_notification.dart';
+import 'package:muscletracking_app/componets/milestone_patient_summary.dart';
 import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/utils/patient_progress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
@@ -19,6 +21,7 @@ class _NotificationHubState extends State<NotificationHub> {
   String accountName = "";
   int accountNumber = 0;
   int notificationCount = 0;
+  List<PatientProgress> patientsProgress = [];
 
   getAccount() async {
     SharedPreferences prefereces = await SharedPreferences.getInstance();
@@ -37,6 +40,9 @@ class _NotificationHubState extends State<NotificationHub> {
       }
       isLoaded = true;
     });
+    if (!isPatient) {
+      getPatientSummary();
+    }
     readNotifications(accountNumber);
   }
 
@@ -52,6 +58,13 @@ class _NotificationHubState extends State<NotificationHub> {
     // TODO: implement initState
     super.initState();
     getAccount();
+  }
+
+  getPatientSummary() async {
+    Map<int, PatientProgress> body = await getSummaryMilestones(2142);
+    for (var element in body.entries) {
+      patientsProgress.add(element.value);
+    }
   }
 
   @override
@@ -71,18 +84,11 @@ class _NotificationHubState extends State<NotificationHub> {
                 )),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(left: 25, right: 25),
-                child: ListView(
-                  children: [
-                    //
-                    //
-                    const SizedBox(height: 10),
-
-                    // const ProgressBar(
-                    //   part: 0.7,
-                    //   colorIndex: 0,
-                    // ),
-                  ],
+                margin: const EdgeInsets.only(left: 40, right: 40),
+                child: ListView.builder(
+                  itemBuilder: (context, index) => MilestonePatientSummary(
+                      patientData: patientsProgress[index]),
+                  itemCount: patientsProgress.length,
                 ),
               ),
             ),
