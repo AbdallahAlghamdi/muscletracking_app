@@ -250,7 +250,7 @@ Future<Map<int, PatientProgress>> getSummaryMilestones(
   var body = jsonDecode(tempBody);
   Map<int, PatientProgress> patientList = {};
   for (var element in body) {
-    // print(element);
+    print(element);
     if (!patientList.containsKey(element["account_number"])) {
       int patientAccountNumber = element["account_number"];
       String patientName = element["_name"];
@@ -258,26 +258,13 @@ Future<Map<int, PatientProgress>> getSummaryMilestones(
       int passedDuration = element["passedDuration"];
       int duration = element["duration"];
       int muscleIndex = 0;
-      switch (muscleGroup) {
-        case "BICEP":
-          muscleIndex = 0;
-          break;
-        case "CALF":
-          muscleIndex = 1;
-          break;
-        case "THIGH":
-          muscleIndex = 2;
-          break;
-        case "FOREARM":
-          muscleIndex = 3;
-          break;
-      }
+      muscleIndex = getMuscleIndex(muscleGroup);
       List<int> milestones = [0, 0, 0, 0];
       List<int> progress = [0, 0, 0, 0];
       milestones[muscleIndex] = duration;
       progress[muscleIndex] = passedDuration;
-      patientList[patientAccountNumber] =
-          PatientProgress(milestones, progress, patientName, "weekly");
+      patientList[patientAccountNumber] = PatientProgress(
+          milestones, progress, patientName, "weekly", patientAccountNumber);
     } else {
       int patientAccountNumber = element["account_number"];
       PatientProgress tempProgress = patientList[patientAccountNumber]!;
@@ -285,20 +272,7 @@ Future<Map<int, PatientProgress>> getSummaryMilestones(
       int passedDuration = element["passedDuration"];
       int duration = element["duration"];
       int muscleIndex = 0;
-      switch (muscleGroup) {
-        case "BICEP":
-          muscleIndex = 0;
-          break;
-        case "CALF":
-          muscleIndex = 1;
-          break;
-        case "THIGH":
-          muscleIndex = 2;
-          break;
-        case "FOREARM":
-          muscleIndex = 3;
-          break;
-      }
+      muscleIndex = getMuscleIndex(muscleGroup);
       tempProgress.milestone[muscleIndex] = duration;
       tempProgress.progress[muscleIndex] = passedDuration;
       patientList[patientAccountNumber] = tempProgress;
@@ -306,9 +280,56 @@ Future<Map<int, PatientProgress>> getSummaryMilestones(
       // print("old patient");
     }
   }
-
   return patientList;
 }
+
+Future<PatientProgress> getPatientSummary(
+    int patientID, String duration, String patientName) async {
+  var tempbody = await getData("/getPatientSummary/$patientID/${duration[0]}");
+  PatientProgress currentPatient =
+      PatientProgress([0, 0, 0, 0], [0, 0, 0, 0], patientName, duration, 0000);
+  if (tempbody.isEmpty) {
+    return currentPatient;
+  }
+  var body = jsonDecode(tempbody);
+  for (var element in body) {
+    String muscleGroup = element["muscleGroup"];
+    int tempDuration = 0;
+    if (element["daily"] != null) {
+      tempDuration = element["daily"];
+    } else if (element["weekly"] != null) {
+      tempDuration = element["weekly"];
+    } else if (element["monthly"] != null) {
+      tempDuration = element["monthly"];
+    } else if (element["yearly"] != null) {
+      tempDuration = element["yearly"];
+    }
+    int passedDuration = 0;
+    if (element["passedDuration"] == null || element["passedDuration"] < 1) {
+      passedDuration = 1;
+    } else {
+      passedDuration = element["passedDuration"];
+    }
+    int muscleIndex = getMuscleIndex(muscleGroup);
+    currentPatient.milestone[muscleIndex] = tempDuration;
+    currentPatient.progress[muscleIndex] = passedDuration;
+  }
+  return currentPatient;
+}
+
 // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
-        // 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
-        
+// 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
+int getMuscleIndex(String muscleGroup) {
+  switch (muscleGroup) {
+    case "BICEP":
+      return 0;
+    case "CALF":
+      return 1;
+    case "THIGH":
+      return 2;
+    case "FOREARM":
+      return 3;
+    default:
+      return -1;
+  }
+}

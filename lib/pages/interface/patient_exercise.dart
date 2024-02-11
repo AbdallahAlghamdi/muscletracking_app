@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:muscletracking_app/componets/Buttons/image_button.dart';
 import 'package:muscletracking_app/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientExercise extends StatelessWidget {
   final Function(String) function;

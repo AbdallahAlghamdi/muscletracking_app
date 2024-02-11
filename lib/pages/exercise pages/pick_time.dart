@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';

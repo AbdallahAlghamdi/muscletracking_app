@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
-import 'package:muscletracking_app/componets/Buttons/image_button.dart';
 import 'package:muscletracking_app/pages/exercise%20pages/bluetooth_check.dart';
 import 'package:muscletracking_app/pages/interface/patient_exercise.dart';
 import 'package:muscletracking_app/pages/interface/physician_exercise.dart';
-import 'package:muscletracking_app/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ExcercisePage extends StatefulWidget {
@@ -49,8 +45,10 @@ class _ExcercisePageState extends State<ExcercisePage> {
 
   @override
   Widget build(BuildContext context) {
-    return isPatient
-        ? PatientExercise(function: gotoBluetoothCheck, show: isPatient)
-        : PhysicianExercise();
+    return Visibility(
+        visible: isLoaded,
+        child: isPatient
+            ? PatientExercise(function: gotoBluetoothCheck, show: isPatient)
+            : const PhysicianExercise());
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 
 class ToggleButtonMail extends StatelessWidget {
   final String isOutBound;
@@ -15,9 +14,9 @@ class ToggleButtonMail extends StatelessWidget {
       child: SegmentedButton<String>(
           emptySelectionAllowed: true,
           style: TextButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              disabledIconColor: Colors.grey,
-              textStyle: const TextStyle(color: Colors.amber)),
+            backgroundColor: Colors.deepPurple,
+            disabledIconColor: Colors.grey,
+          ),
           selectedIcon: const Icon(Icons.abc, color: Colors.transparent),
           segments: const [
             ButtonSegment(value: "inbox", label: Text("Inbox")),

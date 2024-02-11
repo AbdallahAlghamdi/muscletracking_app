@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/componets/error_box.dart';
@@ -26,7 +24,6 @@ class _SettingsPageState extends State<SettingsPage> {
   String errorMessage = "";
   int accountNumber = 0;
   void getAccountType() async {
-    print("getting account type");
     final SharedPreferences userPreferences =
         await SharedPreferences.getInstance();
 

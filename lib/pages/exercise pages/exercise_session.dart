@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:muscletracking_app/online/database.dart';
 import 'package:muscletracking_app/pages/exercise%20pages/pick_time.dart';
 import 'package:muscletracking_app/pages/exercise%20pages/successful_exercise.dart';

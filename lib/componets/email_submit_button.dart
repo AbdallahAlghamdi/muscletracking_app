@@ -21,11 +21,11 @@ class EmailSubmitButton extends StatelessWidget {
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Send'),
+              Text('Send', style: TextStyle(color: Colors.white)),
               SizedBox(
                 width: 10,
               ),
-              Icon(UniconsLine.envelope_send)
+              Icon(UniconsLine.envelope_send, color: Colors.white)
             ],
           ),
         ),

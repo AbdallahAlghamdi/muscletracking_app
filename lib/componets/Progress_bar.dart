@@ -14,6 +14,7 @@ class ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int selectedColorIndex = 0;
+
     if (part < 0.3) {
       selectedColorIndex = 1;
     } else if (part >= 1) {
@@ -24,7 +25,7 @@ class ProgressBar extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10, bottom: 5, top: 5),
             decoration: BoxDecoration(
                 border: Border.all(
                     width: 3, color: const Color.fromARGB(255, 59, 59, 59)),

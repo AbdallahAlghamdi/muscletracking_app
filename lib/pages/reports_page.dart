@@ -133,8 +133,6 @@ class _ReportsPageState extends State<ReportsPage> {
       }
 
       double average = total / (data.length - 1);
-      print("Average: $average");
-      print(average / data[0]);
       setState(() {
         averageImprovment = average / data[0];
         // averageImprovment = increase / data[0];

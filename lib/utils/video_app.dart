@@ -13,7 +13,6 @@ class _VideoAppState extends State<VideoApp> {
   late VideoPlayerController controller;
   @override
   void initState() {
-    print('lib/videos/${widget.videoName.toLowerCase()}.mp4');
     super.initState();
     controller = VideoPlayerController.asset(
         'lib/videos/${widget.videoName.toLowerCase()}.mp4')
@@ -28,12 +27,10 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('clicked');
         setState(() {
           if (!controller.value.isPlaying) {
             controller.play();
           } else {
-            print("true");
             controller.pause();
           }
         });

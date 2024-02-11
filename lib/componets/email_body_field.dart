@@ -12,7 +12,9 @@ class EmailBodyField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: Expanded(
+      child: SizedBox(
+        width: 400,
+        height: 300,
         child: Container(
           padding: const EdgeInsets.all(25),
           margin: const EdgeInsets.only(top: 25, left: 25, right: 25),

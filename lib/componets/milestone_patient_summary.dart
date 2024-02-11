@@ -10,7 +10,7 @@ class MilestonePatientSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 25),
+      margin: const EdgeInsets.only(bottom: 10),
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.deepPurple,
@@ -32,30 +32,18 @@ class MilestonePatientSummary extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
         ProgressBar(
             part: patientData.progress[0] / patientData.milestone[0],
             muscleGroup: "bicep"),
-        const SizedBox(height: 10),
         ProgressBar(
             part: patientData.progress[1] / patientData.milestone[1],
             muscleGroup: "leg"),
-        const SizedBox(height: 10),
         ProgressBar(
             part: patientData.progress[2] / patientData.milestone[2],
             muscleGroup: "quad"),
-        const SizedBox(height: 10),
         ProgressBar(
             part: patientData.progress[3] / patientData.milestone[3],
             muscleGroup: "forearm"),
-        ElevatedButton(
-          onPressed: () {},
-          style: const ButtonStyle(
-              backgroundColor:
-                  MaterialStatePropertyAll(Colors.deepPurpleAccent)),
-          child: const Text("More details"),
-        ),
-        const SizedBox(height: 10)
       ]),
     );
   }

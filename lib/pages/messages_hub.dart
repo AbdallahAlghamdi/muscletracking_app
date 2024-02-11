@@ -102,7 +102,10 @@ class _MessageState extends State<MessageHub> {
                   child: FloatingActionButton(
                     onPressed: gotoNewMail,
                     backgroundColor: Colors.deepPurple,
-                    child: const Icon(UniconsLine.envelope),
+                    child: const Icon(
+                      UniconsLine.envelope,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               )

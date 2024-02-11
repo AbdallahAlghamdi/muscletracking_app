@@ -9,7 +9,14 @@ class TextIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [text, SizedBox(width: 10), Icon(icon)],
+      children: [
+        text,
+        SizedBox(width: 10),
+        Icon(
+          icon,
+          color: Colors.white,
+        )
+      ],
     );
   }
 }

@@ -36,6 +36,5 @@ class SuccessBox extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

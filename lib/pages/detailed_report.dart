@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:muscletracking_app/componets/graph_dart.dart';
 import 'package:muscletracking_app/componets/sliding_buttons.dart';
 import 'package:muscletracking_app/online/database.dart';

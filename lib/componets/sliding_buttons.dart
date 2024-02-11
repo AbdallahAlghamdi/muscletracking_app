@@ -15,6 +15,7 @@ class SlidingButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSlidingSegmentedControl<int>(
+      innerPadding: const EdgeInsets.all(5),
       isStretch: true,
       initialValue: intialValue,
       children: elements,

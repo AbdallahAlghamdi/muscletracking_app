@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/componets/Progress_bar.dart';
 import 'package:muscletracking_app/componets/mail/mail_notification.dart';
 import 'package:muscletracking_app/componets/milestone_patient_summary.dart';
 import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/pages/patient_milestone_page.dart';
 import 'package:muscletracking_app/utils/patient_progress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:unicons/unicons.dart';
 
 class NotificationHub extends StatefulWidget {
   const NotificationHub({super.key});
@@ -62,9 +61,27 @@ class _NotificationHubState extends State<NotificationHub> {
 
   getPatientSummary() async {
     Map<int, PatientProgress> body = await getSummaryMilestones(2142);
+    List<PatientProgress> tempPatientsList = [];
     for (var element in body.entries) {
-      patientsProgress.add(element.value);
+      tempPatientsList.add(element.value);
     }
+    setState(() {
+      patientsProgress = tempPatientsList;
+    });
+  }
+
+  gotoSummaryDetails(int index) {
+    String patientName = patientsProgress[index].name;
+    int accountNumber = patientsProgress[index].accountNumber;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => PatientMilestonePage(
+                patientID: accountNumber,
+                patientName: patientName,
+                doctorID: accountNumber,
+              )),
+    );
   }
 
   @override
@@ -86,8 +103,11 @@ class _NotificationHubState extends State<NotificationHub> {
               child: Container(
                 margin: const EdgeInsets.only(left: 40, right: 40),
                 child: ListView.builder(
-                  itemBuilder: (context, index) => MilestonePatientSummary(
-                      patientData: patientsProgress[index]),
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => gotoSummaryDetails(index),
+                    child: MilestonePatientSummary(
+                        patientData: patientsProgress[index]),
+                  ),
                   itemCount: patientsProgress.length,
                 ),
               ),

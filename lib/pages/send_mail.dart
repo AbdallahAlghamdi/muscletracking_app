@@ -6,7 +6,6 @@ import 'package:muscletracking_app/componets/email_submit_button.dart';
 import 'package:muscletracking_app/componets/email_title_field.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
 import 'package:muscletracking_app/online/database.dart';
-import 'package:unicons/unicons.dart';
 
 class SendMail extends StatefulWidget {
   final List<MessageRecipient> recipients;
@@ -32,20 +31,16 @@ class _SendMailState extends State<SendMail> {
     }
   }
 
-  SendMailButton() {
-    print(recipientID);
+  sendMailButton() {
     if (emailBodyController.text.isNotEmpty &&
         emailTitleController.text.isNotEmpty &&
         recipientID != null) {
       newMail(widget.accountNumber, recipientID!, emailBodyController.text,
           emailTitleController.text);
-    } else {
-      print("Not ready");
-    }
+    } else {}
   }
 
   recipientSelection(index) {
-    print(index);
     setState(() {
       emailTitleController.text = "";
       emailBodyController.text = "";
@@ -67,31 +62,34 @@ class _SendMailState extends State<SendMail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("New Mail"),
+        title: const Text(
+          "New Mail",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.deepPurple,
       ),
-      body: Center(
-          child: Column(
-        children: [
-          const SizedBox(height: 20),
-          CoolDropdown(
-              dropdownList: recipientList,
-              controller: menuController,
-              onChange: recipientSelection),
-          EmailTitleField(
-            emailTitleController: emailTitleController,
-            isVisible: isRecipientSelected,
-          ),
-          EmailBodyField(
-            controller: emailBodyController,
-            isVisible: isRecipientSelected,
-          ),
-          EmailSubmitButton(
-              function: SendMailButton, isVisible: isRecipientSelected),
-        ],
-      )),
+      body: ListView(children: [
+        Column(
+          children: [
+            const SizedBox(height: 20),
+            CoolDropdown(
+                dropdownList: recipientList,
+                controller: menuController,
+                onChange: recipientSelection),
+            EmailTitleField(
+              emailTitleController: emailTitleController,
+              isVisible: isRecipientSelected,
+            ),
+            EmailBodyField(
+              controller: emailBodyController,
+              isVisible: isRecipientSelected,
+            ),
+            EmailSubmitButton(
+                function: sendMailButton, isVisible: isRecipientSelected),
+          ],
+        ),
+      ]),
     );
   }
 }
