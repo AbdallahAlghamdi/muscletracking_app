@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
 import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/pages/edit_milestones.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PhysicianExercise extends StatefulWidget {
   const PhysicianExercise({super.key});
-
   @override
   State<PhysicianExercise> createState() => _PhysicianExerciseState();
 }
@@ -28,6 +28,17 @@ class _PhysicianExerciseState extends State<PhysicianExercise> {
     }
   }
 
+  gotoPatientMilestoneView(int index) {
+    print(recipients[index].recipientID);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => EditMilestones(
+              patientID: recipients[index].recipientID,
+              patientName: recipients[index].name)),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +56,10 @@ class _PhysicianExerciseState extends State<PhysicianExercise> {
           const Text("Milestones", style: TextStyle(fontSize: 25)),
           Expanded(
             child: ListView.builder(
-              itemBuilder: (context, index) => recipients[index],
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () => gotoPatientMilestoneView(index),
+                child: recipients[index],
+              ),
               itemCount: recipients.length,
             ),
           )
