@@ -28,9 +28,9 @@ class _PatientReportState extends State<PatientReport> {
         passedFunction: widget.slidingMuscleButtons,
         elements: {
           0: Image.asset('lib/icons/bicep.png'),
-          1: Image.asset('lib/icons/leg.png'),
+          1: Image.asset('lib/icons/calf.png'),
           2: Image.asset('lib/icons/forearm.png'),
-          3: Image.asset('lib/icons/quad.png')
+          3: Image.asset('lib/icons/thigh.png')
         },
       ),
       const SizedBox(height: 20),

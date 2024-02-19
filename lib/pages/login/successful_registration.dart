@@ -19,9 +19,12 @@ class SuccessfulRegistration extends StatelessWidget {
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/loginPage');
             },
-            child: Text("Go back to login page!  😁"),
-            style: ButtonStyle(
+            style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.purple)),
+            child: const Text(
+              "Go back to login page!  😁",
+              style: TextStyle(color: Colors.white),
+            ),
           )
         ],
       )),

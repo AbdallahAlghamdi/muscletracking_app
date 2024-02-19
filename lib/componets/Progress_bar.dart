@@ -32,10 +32,7 @@ class ProgressBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: const Color.fromARGB(255, 152, 151, 149)),
             padding: const EdgeInsets.all(5),
-            child: Image.asset(
-              "lib/icons/$muscleGroup.png",
-              width: 45,
-            ),
+            child: Image.asset("lib/icons/$muscleGroup.png", width: 45),
           ),
           const SizedBox(width: 25),
           Container(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/edit_milestones.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +16,7 @@ class _PhysicianExerciseState extends State<PhysicianExercise> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int? accountNumber = preferences.getInt("account_number");
     if (accountNumber != null) {
-      Map<int, String> body = await getUserRecipients(accountNumber!);
+      Map<int, String> body = await getUserRecipients(accountNumber);
       List<MessageRecipient> tempRecipients = [];
       for (var element in body.entries) {
         tempRecipients.add(
@@ -41,7 +41,6 @@ class _PhysicianExerciseState extends State<PhysicianExercise> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getRecipients();
   }

@@ -3,7 +3,7 @@ import 'package:muscletracking_app/componets/error_box.dart';
 import 'package:muscletracking_app/componets/long_button.dart';
 import 'package:muscletracking_app/componets/patient_or_physician.dart';
 import 'package:muscletracking_app/componets/user_input_field.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:unicons/unicons.dart';
 
 class SignUpPage extends StatefulWidget {

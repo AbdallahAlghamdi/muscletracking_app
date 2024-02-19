@@ -25,7 +25,7 @@ class PickTimeState extends State<PickTime> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          "Pick the time! ⏱",
+          "Pick the Duration! ⏱",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.deepPurpleAccent,

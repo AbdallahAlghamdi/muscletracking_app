@@ -2,7 +2,7 @@ import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/componets/graph_dart.dart';
-import 'package:muscletracking_app/componets/patient_List.dart';
+import 'package:muscletracking_app/componets/milestones/patient_list.dart';
 import 'package:muscletracking_app/componets/sliding_buttons.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
 import 'package:unicons/unicons.dart';
@@ -57,9 +57,9 @@ class _PhysicianReportState extends State<PhysicianReport> {
               passedFunction: widget.slidingMuscleButtons,
               elements: {
                 0: Image.asset('lib/icons/bicep.png'),
-                1: Image.asset('lib/icons/leg.png'),
+                1: Image.asset('lib/icons/calf.png'),
                 2: Image.asset('lib/icons/forearm.png'),
-                3: Image.asset('lib/icons/quad.png')
+                3: Image.asset('lib/icons/thigh.png')
               },
             ),
             const SizedBox(height: 10),

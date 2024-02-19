@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:unicons/unicons.dart';
 
 class Mail extends StatefulWidget {
@@ -11,7 +11,7 @@ class Mail extends StatefulWidget {
   final String title;
   final bool hasRead;
   final bool isSent;
-  Mail(
+  const Mail(
       {super.key,
       required this.fromUser,
       required this.toUser,
@@ -38,7 +38,6 @@ class _MailState extends State<Mail> {
   @override
   void initState() {
     super.initState();
-    print("STUAT: ${widget.hasRead}");
     isRead = widget.hasRead;
   }
 
@@ -65,7 +64,8 @@ class _MailState extends State<Mail> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Visibility(visible: widget.isSent, child: SizedBox(height: 15)),
+            Visibility(
+                visible: widget.isSent, child: const SizedBox(height: 15)),
             Visibility(
               visible: !widget.isSent,
               child: Row(
@@ -80,11 +80,11 @@ class _MailState extends State<Mail> {
             RichText(
                 text: TextSpan(
                     text: "Subject: ",
-                    style: TextStyle(color: Colors.white60),
+                    style: const TextStyle(color: Colors.white60),
                     children: [
                   TextSpan(
                       text: widget.title,
-                      style: TextStyle(color: Colors.white)),
+                      style: const TextStyle(color: Colors.white)),
                 ])),
             // Text(
             //   "Subject: ${widget.title}",
@@ -97,20 +97,20 @@ class _MailState extends State<Mail> {
                 RichText(
                     text: TextSpan(
                         text: "From: ",
-                        style: TextStyle(color: Colors.white60),
+                        style: const TextStyle(color: Colors.white60),
                         children: [
                       TextSpan(
                           text: widget.fromUser,
-                          style: TextStyle(color: Colors.white)),
+                          style: const TextStyle(color: Colors.white)),
                     ])),
                 RichText(
                     text: TextSpan(
                         text: "To: ",
-                        style: TextStyle(color: Colors.white60),
+                        style: const TextStyle(color: Colors.white60),
                         children: [
                       TextSpan(
                           text: widget.toUser,
-                          style: TextStyle(color: Colors.white)),
+                          style: const TextStyle(color: Colors.white)),
                     ])),
               ],
             ),
@@ -118,11 +118,11 @@ class _MailState extends State<Mail> {
             RichText(
                 text: TextSpan(
                     text: "Date: ",
-                    style: TextStyle(color: Colors.white60),
+                    style: const TextStyle(color: Colors.white60),
                     children: [
                   TextSpan(
                       text: formatDateTime(widget.time),
-                      style: TextStyle(color: Colors.white)),
+                      style: const TextStyle(color: Colors.white)),
                 ])),
 
             Visibility(

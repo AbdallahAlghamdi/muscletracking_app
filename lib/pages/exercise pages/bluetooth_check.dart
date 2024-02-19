@@ -92,6 +92,21 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
             ),
           ),
           Visibility(
+            visible: devicesConnected[1],
+            child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+              onPressed: goToSensorCheck,
+              child: const TextIcon(
+                text: Text(
+                  "Continue",
+                  style: TextStyle(color: Colors.white),
+                ),
+                icon: FontAwesomeIcons.personWalkingArrowRight,
+              ),
+            ),
+          ),
+          Visibility(
               visible: clicked,
               child: Container(
                 margin: EdgeInsets.all(15),
@@ -101,18 +116,6 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
                         : "lib/icons/reactions/disappointed.json",
                     width: 200),
               )),
-          Visibility(
-            visible: devicesConnected[1],
-            child: ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
-              onPressed: goToSensorCheck,
-              child: const TextIcon(
-                text: Text("Continue"),
-                icon: FontAwesomeIcons.personWalkingArrowRight,
-              ),
-            ),
-          ),
           Visibility(
             visible: !devicesConnected[1] && clicked,
             child: Container(

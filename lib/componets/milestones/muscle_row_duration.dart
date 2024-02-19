@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/componets/alert_duration_dialogue.dart';
+import 'package:muscletracking_app/componets/milestones/alert_duration_dialogue.dart';
 import 'package:unicons/unicons.dart';
 
 class MuscleRowMilestone extends StatefulWidget {
   final int duration;
   final String muscleGroup;
+  final int patientID;
+  final String durationIndex;
   const MuscleRowMilestone({
     super.key,
     required this.duration,
     required this.muscleGroup,
+    required this.patientID,
+    required this.durationIndex,
   });
 
   @override
@@ -81,8 +85,16 @@ class _MuscleRowMilestoneState extends State<MuscleRowMilestone> {
           onPressed: () {
             showDialog(
                 context: context,
-                barrierLabel: "TEST",
-                builder: (context) => const AlertDurationDialogue());
+                builder: (context) => AlertDurationDialogue(
+                      currentDuration: time,
+                      patientID: widget.patientID,
+                      muscleGroup: widget.muscleGroup,
+                      durationIndex: widget.durationIndex,
+                    )).then((value) {
+              setState(() {
+                time = Duration(seconds: value);
+              });
+            });
           },
           icon: const Icon(
             UniconsLine.stopwatch,

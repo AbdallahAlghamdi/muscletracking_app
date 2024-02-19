@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
-import 'package:muscletracking_app/componets/milestone_patient_summary.dart';
+import 'package:muscletracking_app/componets/milestones/milestone_patient_summary.dart';
 import 'package:muscletracking_app/componets/sliding_buttons.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/send_mail.dart';
 import 'package:muscletracking_app/utils/patient_progress.dart';
 
@@ -43,6 +43,7 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
     }
     PatientProgress tempPatient =
         await getPatientSummary(widget.patientID, duration, widget.patientName);
+
     setState(() {
       currentPatient = tempPatient;
     });

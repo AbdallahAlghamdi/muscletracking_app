@@ -143,7 +143,7 @@ Future<Map<String, dynamic>?> login(String username, String password) async {
     return null;
   } else {
     Map<String, dynamic> loginInformation = {};
-    var body = jsonDecode(await tempBody);
+    var body = jsonDecode(tempBody);
     print(body);
     // int account_number = body[0]["account_number"];
     loginInformation["account_number"] = body[0]["account_number"].toString();
@@ -214,8 +214,8 @@ Future<List<Mail>> getSentMail(int accountNumber, String accountName) async {
     int messageID = element["_id"];
     mail.add(Mail(
       messageID: messageID,
-      fromUser: senderName,
-      toUser: accountName,
+      fromUser: accountName,
+      toUser: senderName,
       message: message,
       time: time,
       title: messageTitle,
@@ -254,9 +254,18 @@ Future<Map<int, PatientProgress>> getSummaryMilestones(
     if (!patientList.containsKey(element["account_number"])) {
       int patientAccountNumber = element["account_number"];
       String patientName = element["_name"];
-      String muscleGroup = element["muscleGroup"];
-      int passedDuration = element["passedDuration"];
-      int duration = element["duration"];
+      String muscleGroup = 'BICEP';
+      if (element["muscleGroup"] != null) {
+        muscleGroup = element["muscleGroup"];
+      }
+      int passedDuration = 0;
+      if (element["passedDuration"] != null) {
+        passedDuration = element["passedDuration"];
+      }
+      int duration = 1;
+      if (element["duration"] != null) {
+        element["duration"];
+      }
       int muscleIndex = 0;
       muscleIndex = getMuscleIndex(muscleGroup);
       List<int> milestones = [0, 0, 0, 0];
@@ -306,7 +315,7 @@ Future<PatientProgress> getPatientSummary(
     }
     int passedDuration = 0;
     if (element["passedDuration"] == null || element["passedDuration"] < 1) {
-      passedDuration = 1;
+      passedDuration = 0;
     } else {
       passedDuration = element["passedDuration"];
     }
@@ -320,6 +329,7 @@ Future<PatientProgress> getPatientSummary(
 // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
 // 'getavg/555/${muscleSelectedGroup.toUpperCase()}');
 int getMuscleIndex(String muscleGroup) {
+  print("MUSCLE GROUP: $muscleGroup");
   switch (muscleGroup) {
     case "BICEP":
       return 0;
@@ -332,4 +342,12 @@ int getMuscleIndex(String muscleGroup) {
     default:
       return -1;
   }
+}
+
+sendNewMilestone(
+    int newMilestone, int patientID, String muscleGroup, String durationIndex) {
+  print("new milestone submit");
+  postData({},
+      "/newMilestone/$patientID/$newMilestone/${muscleGroup.toUpperCase()}/$durationIndex");
+  // newMilestone/<int:patientID>/<duration>/<muscleGroup>/<durationGroup>
 }

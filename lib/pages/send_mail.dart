@@ -5,7 +5,7 @@ import 'package:muscletracking_app/componets/email_body_field.dart';
 import 'package:muscletracking_app/componets/email_submit_button.dart';
 import 'package:muscletracking_app/componets/email_title_field.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 
 class SendMail extends StatefulWidget {
   final List<MessageRecipient> recipients;

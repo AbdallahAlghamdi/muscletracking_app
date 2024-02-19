@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muscletracking_app/componets/mail/mail_notification.dart';
-import 'package:muscletracking_app/componets/milestone_patient_summary.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/milestones/milestone_patient_summary.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/patient_milestone_page.dart';
 import 'package:muscletracking_app/utils/patient_progress.dart';
 import 'package:shared_preferences/shared_preferences.dart';

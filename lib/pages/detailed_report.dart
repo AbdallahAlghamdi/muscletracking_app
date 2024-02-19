@@ -4,7 +4,7 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:muscletracking_app/componets/graph_dart.dart';
 import 'package:muscletracking_app/componets/sliding_buttons.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:unicons/unicons.dart';
 
 class DetailedReport extends StatefulWidget {
@@ -68,9 +68,9 @@ class _DetailedReportState extends State<DetailedReport> {
   getIcon() {
     switch (widget.muscleGroup.toUpperCase()) {
       case "THIGH":
-        return Image.asset('lib/icons/quad.png', height: 35);
+        return Image.asset('lib/icons/thigh.png', height: 35);
       case "CALF":
-        return Image.asset('lib/icons/leg.png', height: 35);
+        return Image.asset('lib/icons/calf.png', height: 35);
       case "BICEP":
         return Image.asset('lib/icons/bicep.png', height: 35);
       case "FOREARM":

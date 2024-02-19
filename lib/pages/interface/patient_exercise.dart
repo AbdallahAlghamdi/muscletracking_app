@@ -79,7 +79,7 @@ class PatientExercise extends StatelessWidget {
                       child: ImageButtonA(
                         imageSrc: 'lib/images/quad.png',
                         functionPassed: () {
-                          function('QUAD');
+                          function('THIGH');
                         },
                       ),
                     ),

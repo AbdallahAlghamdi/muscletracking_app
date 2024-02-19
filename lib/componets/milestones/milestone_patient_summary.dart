@@ -37,13 +37,14 @@ class MilestonePatientSummary extends StatelessWidget {
             muscleGroup: "bicep"),
         ProgressBar(
             part: patientData.progress[1] / patientData.milestone[1],
-            muscleGroup: "leg"),
+            muscleGroup: "calf"),
         ProgressBar(
             part: patientData.progress[2] / patientData.milestone[2],
-            muscleGroup: "quad"),
+            muscleGroup: "thigh"),
         ProgressBar(
             part: patientData.progress[3] / patientData.milestone[3],
             muscleGroup: "forearm"),
+        const SizedBox(height: 10),
       ]),
     );
   }

@@ -3,7 +3,7 @@ import 'package:muscletracking_app/componets/mail/mail.dart';
 import 'package:muscletracking_app/componets/mail/mail_list.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
 import 'package:muscletracking_app/componets/toggle_button_mail.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/send_mail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';

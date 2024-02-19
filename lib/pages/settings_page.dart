@@ -4,7 +4,7 @@ import 'package:muscletracking_app/componets/error_box.dart';
 import 'package:muscletracking_app/componets/success_box.dart';
 import 'package:muscletracking_app/componets/text_field_add.dart';
 import 'package:muscletracking_app/componets/text_icon.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/about_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';

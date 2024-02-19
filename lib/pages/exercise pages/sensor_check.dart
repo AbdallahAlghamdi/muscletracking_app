@@ -21,11 +21,11 @@ class _SensorCheckState extends State<SensorCheck> {
       case 'BICEP':
         return 'lib/icons/bicep.png';
       case 'CALF':
-        return 'lib/icons/leg.png';
+        return 'lib/icons/calf.png';
       case 'FOREARM':
         return 'lib/icons/forearm.png';
-      case 'QUAD':
-        return 'lib/icons/quad.png';
+      case 'THIGH':
+        return 'lib/icons/thigh.png';
     }
   }
 
@@ -111,14 +111,6 @@ class _SensorCheckState extends State<SensorCheck> {
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   )),
             ),
-            Container(
-              margin: const EdgeInsets.all(25),
-              child: Lottie.asset(
-                  isSensorReady
-                      ? "lib/icons/reactions/holding_hands.json"
-                      : "lib/icons/reactions/disappointed.json",
-                  width: 200),
-            ),
             Visibility(
               visible: !isSensorReady,
               child: ElevatedButton(
@@ -126,7 +118,10 @@ class _SensorCheckState extends State<SensorCheck> {
                     backgroundColor: Colors.deepPurpleAccent),
                 child: const TextIcon(
                   icon: Icons.help,
-                  text: Text("Do you need help?"),
+                  text: Text(
+                    "Do you need help?",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -137,6 +132,14 @@ class _SensorCheckState extends State<SensorCheck> {
                   );
                 },
               ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(25),
+              child: Lottie.asset(
+                  isSensorReady
+                      ? "lib/icons/reactions/holding_hands.json"
+                      : "lib/icons/reactions/disappointed.json",
+                  width: 200),
             ),
           ],
         ),

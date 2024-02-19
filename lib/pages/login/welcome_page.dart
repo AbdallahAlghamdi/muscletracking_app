@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:muscletracking_app/componets/error_box.dart';
 import 'package:muscletracking_app/componets/long_button.dart';
 import 'package:muscletracking_app/componets/user_input_field.dart';
-import 'package:muscletracking_app/online/database.dart';
+import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
@@ -99,7 +99,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   left: 25, top: 40, right: 25, bottom: 25),
               decoration: BoxDecoration(
                   color: const Color(0xffffffff),
-                  border: Border.all(width: 2, color: Color(0xffe6e6e6)),
+                  border: Border.all(width: 2, color: const Color(0xffe6e6e6)),
                   borderRadius: BorderRadius.circular(2)),
               child: Column(
                 children: [
