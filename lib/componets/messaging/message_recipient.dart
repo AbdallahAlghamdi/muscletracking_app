@@ -28,7 +28,7 @@ class MessageRecipient extends StatelessWidget {
               const SizedBox(width: 15),
               Text(
                 name,
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 16),
               )
             ],
           ),

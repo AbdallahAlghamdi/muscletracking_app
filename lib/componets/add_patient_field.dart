@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unicons/unicons.dart';
 
-class TextFieldAdd extends StatelessWidget {
+class AddPatientField extends StatelessWidget {
   final Function(String) function;
-  const TextFieldAdd({super.key, required this.function});
+  const AddPatientField({super.key, required this.function});
 
   @override
   Widget build(BuildContext context) {

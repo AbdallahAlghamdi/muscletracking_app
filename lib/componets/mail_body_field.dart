@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EmailBodyField extends StatelessWidget {
+class MailBodyField extends StatelessWidget {
   final bool isVisible;
   final TextEditingController controller;
 
-  const EmailBodyField(
+  const MailBodyField(
       {super.key, required this.controller, required this.isVisible});
 
   @override
@@ -13,8 +13,8 @@ class EmailBodyField extends StatelessWidget {
     return Visibility(
       visible: isVisible,
       child: SizedBox(
-        width: 400,
-        height: 300,
+        width: double.infinity,
+        height: 400,
         child: Container(
           padding: const EdgeInsets.all(25),
           margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -22,6 +22,7 @@ class EmailBodyField extends StatelessWidget {
               color: Colors.deepPurple,
               borderRadius: BorderRadius.circular(25)),
           child: TextField(
+            enableSuggestions: true,
             inputFormatters: [LengthLimitingTextInputFormatter(65535)],
             controller: controller,
             style: const TextStyle(color: Colors.white),

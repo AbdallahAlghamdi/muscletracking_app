@@ -5,10 +5,14 @@ import 'package:muscletracking_app/componets/Buttons/image_button.dart';
 import 'package:muscletracking_app/utils/colors.dart';
 
 class PatientExercise extends StatelessWidget {
-  final Function(String) function;
   final bool show;
+  final int patientID;
+  final Function(String, int) function;
   const PatientExercise(
-      {super.key, required this.function, required this.show});
+      {super.key,
+      required this.show,
+      required this.patientID,
+      required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class PatientExercise extends StatelessWidget {
                       child: ImageButtonA(
                           imageSrc: 'lib/images/biceps.png',
                           functionPassed: () {
-                            function("BICEP");
+                            function("BICEP", patientID);
                           }),
                     ),
                     Align(
@@ -62,7 +66,7 @@ class PatientExercise extends StatelessWidget {
                         child: ImageButtonA(
                           imageSrc: 'lib/images/calf.png',
                           functionPassed: () {
-                            function('CALF');
+                            function('CALF', patientID);
                           },
                         )),
                     Align(
@@ -70,7 +74,7 @@ class PatientExercise extends StatelessWidget {
                       child: ImageButtonA(
                         imageSrc: 'lib/images/forearm.png',
                         functionPassed: () {
-                          function('FOREARM');
+                          function('FOREARM', patientID);
                         },
                       ),
                     ),
@@ -79,7 +83,7 @@ class PatientExercise extends StatelessWidget {
                       child: ImageButtonA(
                         imageSrc: 'lib/images/quad.png',
                         functionPassed: () {
-                          function('THIGH');
+                          function('THIGH', patientID);
                         },
                       ),
                     ),

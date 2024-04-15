@@ -27,7 +27,6 @@ class _EditMilestonesState extends State<EditMilestones> {
   getmilestones() async {
     PatientProgress progress = await getPatientSummary(
         widget.patientID, durationIndex[0], widget.patientName);
-    print(progress.milestone);
     setState(() {
       milestones = progress.milestone;
       isLoaded = true;
@@ -48,7 +47,7 @@ class _EditMilestonesState extends State<EditMilestones> {
         margin: const EdgeInsets.all(25),
         child: Column(children: [
           SlidingButtons(
-            passedFunction: (index) {
+            function: (index) {
               setState(() {
                 isLoaded = false;
               });

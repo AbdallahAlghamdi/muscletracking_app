@@ -11,7 +11,7 @@ class TextIcon extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         text,
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Icon(
           icon,
           color: Colors.white,

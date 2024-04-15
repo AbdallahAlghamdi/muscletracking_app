@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class UserInputField extends StatelessWidget {
-  final bool isPassword;
-  final IconData icon;
-  final String fieldName;
-  final int maxLength;
-  final TextEditingController controller;
+  final bool
+      isPassword; //Boolean check if the field is a password, sets it as Astrix
+  final IconData icon; //Icon on the left side of the field.
+  final String fieldName; //set the name of the field
+  final int maxLength; //max number of characters allowed
+  final TextEditingController
+      controller; //used to retrieve the data from the field
 
   const UserInputField(
       {super.key,

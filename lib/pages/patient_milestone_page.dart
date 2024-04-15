@@ -43,7 +43,6 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
     }
     PatientProgress tempPatient =
         await getPatientSummary(widget.patientID, duration, widget.patientName);
-
     setState(() {
       currentPatient = tempPatient;
     });
@@ -65,7 +64,6 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPatientmilestones();
   }
@@ -87,7 +85,7 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
           children: [
             const SizedBox(height: 25),
             SlidingButtons(
-              passedFunction: (index) {
+              function: (index) {
                 durationIndex = index;
                 getPatientmilestones();
               },
@@ -100,15 +98,18 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
             ),
             const SizedBox(height: 25),
             MilestonePatientSummary(patientData: currentPatient),
-            ElevatedButton(
-              onPressed: () {
-                gotoMessagePatient();
-              },
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
-              child: const Text("Message patient",
-                  style: TextStyle(color: Colors.white)),
-            )
+            Visibility(
+                visible: widget.doctorID != widget.patientID,
+                child: ElevatedButton(
+                  onPressed: () {
+                    gotoMessagePatient();
+                  },
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.deepPurple)),
+                  child: const Text("Message patient",
+                      style: TextStyle(color: Colors.white)),
+                ))
           ],
         ),
       ),

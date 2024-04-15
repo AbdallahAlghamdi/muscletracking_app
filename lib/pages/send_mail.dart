@@ -1,11 +1,13 @@
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/componets/email_body_field.dart';
-import 'package:muscletracking_app/componets/email_submit_button.dart';
-import 'package:muscletracking_app/componets/email_title_field.dart';
+import 'package:muscletracking_app/componets/alert_pop_up.dart';
+import 'package:muscletracking_app/componets/mail_body_field.dart';
+import 'package:muscletracking_app/componets/mail_submit_button.dart';
+import 'package:muscletracking_app/componets/mail_title_field.dart';
 import 'package:muscletracking_app/componets/messaging/message_recipient.dart';
 import 'package:muscletracking_app/componets/online/database.dart';
+import 'package:unicons/unicons.dart';
 
 class SendMail extends StatefulWidget {
   final List<MessageRecipient> recipients;
@@ -32,18 +34,33 @@ class _SendMailState extends State<SendMail> {
   }
 
   sendMailButton() {
-    if (emailBodyController.text.isNotEmpty &&
-        emailTitleController.text.isNotEmpty &&
-        recipientID != null) {
-      newMail(widget.accountNumber, recipientID!, emailBodyController.text,
-          emailTitleController.text);
-    } else {}
+    if (mailBodyController.text.isEmpty) {
+      popUpMessages(
+          "Mail body is missing", const Icon(UniconsLine.envelope_block));
+      return;
+    } else if (mailTitleController.text.isEmpty) {
+      popUpMessages(
+          "Mail body is missing", const Icon(UniconsLine.envelope_block));
+      return;
+    }
+    newMail(widget.accountNumber, recipientID, mailBodyController.text.trim(),
+        mailTitleController.text.trim());
+    Navigator.pop(context);
+    popUpMessages("Mail sent", const Icon(UniconsLine.mailbox));
+  }
+
+  popUpMessages(String message, Icon icon) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertPopUp(text: message, icon: icon);
+        });
   }
 
   recipientSelection(index) {
     setState(() {
-      emailTitleController.text = "";
-      emailBodyController.text = "";
+      mailTitleController.text = "";
+      mailBodyController.text = "";
       isRecipientSelected = true;
       recipientID = index;
     });
@@ -51,9 +68,9 @@ class _SendMailState extends State<SendMail> {
   }
 
   //----------variables----------
-  int? recipientID;
-  TextEditingController emailTitleController = TextEditingController();
-  TextEditingController emailBodyController = TextEditingController();
+  int recipientID = 0;
+  TextEditingController mailTitleController = TextEditingController();
+  TextEditingController mailBodyController = TextEditingController();
   List<CoolDropdownItem> recipientList = [];
   DropdownController menuController = DropdownController();
   bool isRecipientSelected = false;
@@ -77,15 +94,15 @@ class _SendMailState extends State<SendMail> {
                 dropdownList: recipientList,
                 controller: menuController,
                 onChange: recipientSelection),
-            EmailTitleField(
-              emailTitleController: emailTitleController,
+            MailTitleField(
+              controller: mailTitleController,
               isVisible: isRecipientSelected,
             ),
-            EmailBodyField(
-              controller: emailBodyController,
+            MailBodyField(
+              controller: mailBodyController,
               isVisible: isRecipientSelected,
             ),
-            EmailSubmitButton(
+            MailSubmitButton(
                 function: sendMailButton, isVisible: isRecipientSelected),
           ],
         ),

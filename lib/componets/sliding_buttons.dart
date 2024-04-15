@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 
-// ignore: must_be_immutable
 class SlidingButtons extends StatelessWidget {
-  final Function(int) passedFunction;
-  final Map<int, Image> elements;
-  int? intialValue;
-  SlidingButtons(
+  final Function(int)
+      function; //passed function, sends the index of the selected icon
+  final Map<int, Image>
+      elements; //map that corrospond an integer to an image (for icon)
+  final int? intialValue; //initial place for the sliding button. Optional
+  const SlidingButtons(
       {super.key,
-      required this.passedFunction,
+      required this.function,
       required this.elements,
       this.intialValue});
 
@@ -19,7 +20,7 @@ class SlidingButtons extends StatelessWidget {
       isStretch: true,
       initialValue: intialValue,
       children: elements,
-      onValueChanged: passedFunction,
+      onValueChanged: function,
       decoration: BoxDecoration(
           color: Colors.deepPurpleAccent,
           borderRadius: BorderRadius.circular(8),

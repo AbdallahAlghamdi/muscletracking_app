@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EmailTitleField extends StatelessWidget {
-  final TextEditingController emailTitleController;
+class MailTitleField extends StatelessWidget {
+  final TextEditingController controller;
   final bool isVisible;
-  const EmailTitleField(
-      {super.key, required this.emailTitleController, required this.isVisible});
+  const MailTitleField(
+      {super.key, required this.controller, required this.isVisible});
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
       child: SizedBox(
-        width: 400,
+        width: double.infinity,
         height: 150,
         child: Container(
             decoration: BoxDecoration(
@@ -23,7 +23,7 @@ class EmailTitleField extends StatelessWidget {
             child: TextField(
               inputFormatters: [LengthLimitingTextInputFormatter(255)],
               style: const TextStyle(color: Colors.white),
-              controller: emailTitleController,
+              controller: controller,
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white54)),

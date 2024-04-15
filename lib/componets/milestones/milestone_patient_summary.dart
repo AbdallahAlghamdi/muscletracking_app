@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/componets/Progress_bar.dart';
+import 'package:muscletracking_app/componets/progress_bar.dart';
 import 'package:muscletracking_app/utils/patient_progress.dart';
 import 'package:unicons/unicons.dart';
 
@@ -33,17 +33,25 @@ class MilestonePatientSummary extends StatelessWidget {
           ),
         ),
         ProgressBar(
-            part: patientData.progress[0] / patientData.milestone[0],
-            muscleGroup: "bicep"),
+          progress: patientData.progress[0],
+          milestone: patientData.milestone[0],
+          muscleGroup: "bicep",
+        ),
         ProgressBar(
-            part: patientData.progress[1] / patientData.milestone[1],
-            muscleGroup: "calf"),
+          progress: patientData.progress[1],
+          milestone: patientData.milestone[1],
+          muscleGroup: "calf",
+        ),
         ProgressBar(
-            part: patientData.progress[2] / patientData.milestone[2],
-            muscleGroup: "thigh"),
+          progress: patientData.progress[2],
+          milestone: patientData.milestone[2],
+          muscleGroup: "thigh",
+        ),
         ProgressBar(
-            part: patientData.progress[3] / patientData.milestone[3],
-            muscleGroup: "forearm"),
+          progress: patientData.progress[3],
+          milestone: patientData.milestone[3],
+          muscleGroup: "forearm",
+        ),
         const SizedBox(height: 10),
       ]),
     );

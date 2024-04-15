@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class PatientOrPhysician extends StatefulWidget {
+class AccountTypeSelection extends StatefulWidget {
   final Function(int) changeToggle;
   final List<bool> selectedOption;
-  const PatientOrPhysician(
+  const AccountTypeSelection(
       {super.key, required this.changeToggle, required this.selectedOption});
 
   @override
-  State<PatientOrPhysician> createState() => PatientOrPhysicianState();
+  State<AccountTypeSelection> createState() => AccountTypeSelectionState();
 }
 
-class PatientOrPhysicianState extends State<PatientOrPhysician> {
+class AccountTypeSelectionState extends State<AccountTypeSelection> {
   @override
   Widget build(BuildContext context) {
     return Container(

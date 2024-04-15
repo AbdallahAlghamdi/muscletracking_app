@@ -2,15 +2,20 @@ import 'dart:math';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:muscletracking_app/componets/alert_pop_up.dart';
 import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:muscletracking_app/pages/exercise%20pages/pick_time.dart';
-import 'package:muscletracking_app/pages/exercise%20pages/successful_exercise.dart';
+import 'package:unicons/unicons.dart';
 
 class ExerciseSession extends StatefulWidget {
+  final int patientID;
   final String muscleGroup;
   final Duration exerciseDuration;
   const ExerciseSession(
-      {super.key, required this.muscleGroup, required this.exerciseDuration});
+      {super.key,
+      required this.muscleGroup,
+      required this.exerciseDuration,
+      required this.patientID});
 
   @override
   State<ExerciseSession> createState() => _ExerciseSessionState();
@@ -37,8 +42,27 @@ class _ExerciseSessionState extends State<ExerciseSession> {
   void getValueFromArduino() {
     List<int> dataFromArduino = [];
     simulateData(dataFromArduino);
-    newExercise(555, getAverage(dataFromArduino), widget.muscleGroup,
-        dataFromArduino, widget.exerciseDuration.inSeconds);
+    newExercise(widget.patientID, getAverage(dataFromArduino),
+        widget.muscleGroup, dataFromArduino, widget.exerciseDuration.inSeconds);
+  }
+
+  void goBackToHomePage() {
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
+  void successfulExercisePopup() async {
+    goBackToHomePage();
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertPopUp(
+            text: "Exercise is done\nGood job!",
+            icon: Icon(UniconsLine.smile),
+          );
+        });
   }
 
   @override
@@ -61,11 +85,7 @@ class _ExerciseSessionState extends State<ExerciseSession> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularCountDownTimer(
-              onComplete: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SuccessfulExercise()),
-              ),
+              onComplete: successfulExercisePopup,
               autoStart: false,
               controller: timeController,
               width: 400,

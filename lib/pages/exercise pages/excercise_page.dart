@@ -14,11 +14,14 @@ class ExcercisePage extends StatefulWidget {
 class _ExcercisePageState extends State<ExcercisePage> {
   bool isLoaded = false;
   bool isPatient = true;
-  gotoBluetoothCheck(String muscleName) {
+  int accountNumber = 0;
+
+  gotoBluetoothCheck(String muscleName, int patientID) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => BluetoothCheck(muscleGroup: muscleName)),
+          builder: (context) =>
+              BluetoothCheck(muscleGroup: muscleName, patientID: patientID)),
     );
   }
 
@@ -27,8 +30,10 @@ class _ExcercisePageState extends State<ExcercisePage> {
         await SharedPreferences.getInstance();
 
     String accountType = userPreferences.get('account_type').toString();
+
     setState(() {
       isLoaded = true;
+      accountNumber = userPreferences.getInt("account_number")!;
       if (accountType == "patient") {
         isPatient = true;
       } else {
@@ -48,7 +53,11 @@ class _ExcercisePageState extends State<ExcercisePage> {
     return Visibility(
         visible: isLoaded,
         child: isPatient
-            ? PatientExercise(function: gotoBluetoothCheck, show: isPatient)
-            : const PhysicianExercise());
+            ? PatientExercise(
+                show: isPatient,
+                patientID: accountNumber,
+                function: gotoBluetoothCheck,
+              )
+            : PhysicianExercise(doctorID: accountNumber));
   }
 }

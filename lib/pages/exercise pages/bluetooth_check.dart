@@ -8,7 +8,9 @@ import 'package:muscletracking_app/pages/exercise%20pages/sensor_check.dart';
 
 class BluetoothCheck extends StatefulWidget {
   final String muscleGroup;
-  const BluetoothCheck({super.key, required this.muscleGroup});
+  final int patientID;
+  const BluetoothCheck(
+      {super.key, required this.muscleGroup, required this.patientID});
 
   @override
   State<BluetoothCheck> createState() => _BluetoothCheckState();
@@ -39,7 +41,10 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SensorCheck(muscleGroup: widget.muscleGroup)),
+          builder: (context) => SensorCheck(
+                muscleGroup: widget.muscleGroup,
+                patientID: widget.patientID,
+              )),
     );
   }
 
@@ -109,7 +114,7 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
           Visibility(
               visible: clicked,
               child: Container(
-                margin: EdgeInsets.all(15),
+                margin: const EdgeInsets.all(15),
                 child: Lottie.asset(
                     devicesConnected[1]
                         ? "lib/icons/reactions/holding_hands.json"
@@ -119,7 +124,7 @@ class _BluetoothCheckState extends State<BluetoothCheck> {
           Visibility(
             visible: !devicesConnected[1] && clicked,
             child: Container(
-              margin: EdgeInsets.all(25),
+              margin: const EdgeInsets.all(25),
               child: const Text(
                 'Wrong device connected! Please make sure to stand next to the sensor and click on "Muscle Sensor"',
                 style: TextStyle(fontSize: 20),

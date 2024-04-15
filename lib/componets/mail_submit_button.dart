@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
-class EmailSubmitButton extends StatelessWidget {
+class MailSubmitButton extends StatelessWidget {
   final VoidCallback function;
   final bool isVisible;
 
-  const EmailSubmitButton(
+  const MailSubmitButton(
       {super.key, required this.function, required this.isVisible});
 
   @override

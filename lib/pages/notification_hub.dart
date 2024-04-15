@@ -33,6 +33,8 @@ class _NotificationHubState extends State<NotificationHub> {
       }
       if (tempAccountName != null) {
         accountName = tempAccountName;
+        accountName = accountName[0].toUpperCase() +
+            accountName.substring(1).toLowerCase();
       }
       if (tempAccountNumber != null) {
         accountNumber = tempAccountNumber;
@@ -40,7 +42,7 @@ class _NotificationHubState extends State<NotificationHub> {
       isLoaded = true;
     });
     if (!isPatient) {
-      getPatientSummary();
+      getPatientsSummary();
     }
     readNotifications(accountNumber);
   }
@@ -54,13 +56,12 @@ class _NotificationHubState extends State<NotificationHub> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAccount();
   }
 
-  getPatientSummary() async {
-    Map<int, PatientProgress> body = await getSummaryMilestones(2142);
+  getPatientsSummary() async {
+    Map<int, PatientProgress> body = await getSummaryMilestones(accountNumber);
     List<PatientProgress> tempPatientsList = [];
     for (var element in body.entries) {
       tempPatientsList.add(element.value);
@@ -71,13 +72,20 @@ class _NotificationHubState extends State<NotificationHub> {
   }
 
   gotoSummaryDetails(int index) {
-    String patientName = patientsProgress[index].name;
-    int accountNumber = patientsProgress[index].accountNumber;
+    String patientName;
+    int patientID = 0;
+    if (!isPatient) {
+      patientName = patientsProgress[index].name;
+      patientID = patientsProgress[index].accountNumber;
+    } else {
+      patientName = accountName;
+      patientID = accountNumber;
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => PatientMilestonePage(
-                patientID: accountNumber,
+                patientID: patientID,
                 patientName: patientName,
                 doctorID: accountNumber,
               )),
@@ -99,16 +107,27 @@ class _NotificationHubState extends State<NotificationHub> {
                   isMessageLoaded: messagesLoaded,
                   notificationCount: notificationCount,
                 )),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(left: 40, right: 40),
-                child: ListView.builder(
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => gotoSummaryDetails(index),
-                    child: MilestonePatientSummary(
-                        patientData: patientsProgress[index]),
+            Visibility(
+              replacement: ElevatedButton(
+                  onPressed: () {
+                    gotoSummaryDetails(accountNumber);
+                  },
+                  child: const Text(
+                    "View milestone",
+                    style: TextStyle(color: Colors.deepPurple),
+                  )),
+              visible: !isPatient,
+              child: Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 40, right: 40),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => gotoSummaryDetails(index),
+                      child: MilestonePatientSummary(
+                          patientData: patientsProgress[index]),
+                    ),
+                    itemCount: patientsProgress.length,
                   ),
-                  itemCount: patientsProgress.length,
                 ),
               ),
             ),

@@ -7,7 +7,9 @@ import 'package:muscletracking_app/pages/exercise%20pages/video_page.dart';
 
 class SensorCheck extends StatefulWidget {
   final String muscleGroup;
-  const SensorCheck({super.key, required this.muscleGroup});
+  final int patientID;
+  const SensorCheck(
+      {super.key, required this.muscleGroup, required this.patientID});
 
   @override
   State<SensorCheck> createState() => _SensorCheckState();
@@ -103,8 +105,10 @@ class _SensorCheckState extends State<SensorCheck> {
                   onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                PickTime(muscleGroup: widget.muscleGroup)),
+                            builder: (context) => PickTime(
+                                  muscleGroup: widget.muscleGroup,
+                                  patientID: widget.patientID,
+                                )),
                       ),
                   child: const Text(
                     'Ready',

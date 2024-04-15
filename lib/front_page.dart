@@ -35,8 +35,8 @@ class _FrontPageState extends State<FrontPage> {
     const SettingsPage()
   ];
 
-  int currentIndexBottomBar = 1;
-  Widget currentPage = const ExcercisePage();
+  int currentIndexBottomBar = 2;
+  Widget currentPage = const NotificationHub();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

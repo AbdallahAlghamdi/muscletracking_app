@@ -56,14 +56,14 @@ class _MessageState extends State<MessageHub> {
       }
     }
     setState(() {
-      mail = tempMail;
+      mail = tempMail.reversed.toList();
     });
   }
 
-  toggleButtonChanged(Set<String> p0) {
-    if (p0.isNotEmpty) {
+  toggleButtonChanged(Set<String> input) {
+    if (input.isNotEmpty) {
       setState(() {
-        isOutbound = p0.first;
+        isOutbound = input.first;
         mail = [];
       });
 

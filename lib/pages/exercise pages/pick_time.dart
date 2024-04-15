@@ -5,7 +5,9 @@ import 'package:muscletracking_app/pages/exercise%20pages/exercise_session.dart'
 
 class PickTime extends StatefulWidget {
   final String muscleGroup;
-  const PickTime({super.key, required this.muscleGroup});
+  final int patientID;
+  const PickTime(
+      {super.key, required this.muscleGroup, required this.patientID});
 
   @override
   State<PickTime> createState() => PickTimeState();
@@ -61,6 +63,7 @@ class PickTimeState extends State<PickTime> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ExerciseSession(
+                        patientID: widget.patientID,
                         muscleGroup: widget.muscleGroup,
                         exerciseDuration: exerciseDuration,
                       ),

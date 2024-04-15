@@ -2,7 +2,7 @@ import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:muscletracking_app/componets/graph_dart.dart';
+import 'package:muscletracking_app/componets/graph_data.dart';
 import 'package:muscletracking_app/componets/sliding_buttons.dart';
 import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:unicons/unicons.dart';
@@ -19,29 +19,27 @@ class DetailedReport extends StatefulWidget {
 }
 
 class _DetailedReportState extends State<DetailedReport> {
+  //-------Variables-------
   DropdownController contrl =
       DropdownController(duration: const Duration(milliseconds: 0));
   List<CoolDropdownItem<String>> items = [];
   List<double> data = [];
   bool showGraph = false;
-
   String duration = 'd';
+  //----------------------
+
   getExcerciseID() async {
-    print("Started");
     List<int> tempData = [];
     tempData =
         await getExerciseID(widget.accountNumber, widget.muscleGroup, duration);
 
     for (var word in tempData) {
-      setState(() {
-        items.add(CoolDropdownItem(
-            icon: const Icon(UniconsLine.heart_alt),
-            selectedIcon: const Icon(FontAwesomeIcons.heartCircleBolt),
-            label: 'Exercise No. $word',
-            value: "$word"));
-      });
+      items.add(CoolDropdownItem(
+          icon: const Icon(UniconsLine.heart_alt),
+          selectedIcon: const Icon(FontAwesomeIcons.heartCircleBolt),
+          label: 'Exercise No. $word',
+          value: "$word"));
     }
-    print("closed");
   }
 
   slidingDurationButtons(int index) {
@@ -84,24 +82,10 @@ class _DetailedReportState extends State<DetailedReport> {
       showGraph = true;
       data = tempData;
     });
-    // var url = Uri.http('cherubim-w8yy2.ondigitalocean.app',
-    //     'getDetailExercise/$exerciseNumber');
-    // var response = await http.get(url);
-    // var body = jsonDecode(response.body);
-    // print(body[0]);
-    // for (var word in body) {
-    //   print(word['value']);
-    //   int val = word['value'];
-    //   setState(() {
-    //     data.add(val.toDouble());
-    //   });
-    // }
   }
 
   @override
   void initState() {
-    print(widget.accountNumber);
-    print(widget.muscleGroup);
     getExcerciseID();
     super.initState();
   }
@@ -129,7 +113,7 @@ class _DetailedReportState extends State<DetailedReport> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SlidingButtons(
-                  passedFunction: slidingDurationButtons,
+                  function: slidingDurationButtons,
                   elements: {
                     0: Image.asset('lib/icons/day.png'),
                     1: Image.asset('lib/icons/week.png'),
@@ -137,7 +121,7 @@ class _DetailedReportState extends State<DetailedReport> {
                     3: Image.asset('lib/icons/year.png')
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CoolDropdown(
                     dropdownList: items,
                     controller: contrl,

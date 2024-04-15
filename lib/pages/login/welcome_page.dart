@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:muscletracking_app/componets/error_box.dart';
+import 'package:muscletracking_app/componets/alert_pop_up.dart';
 import 'package:muscletracking_app/componets/long_button.dart';
 import 'package:muscletracking_app/componets/user_input_field.dart';
 import 'package:muscletracking_app/componets/online/database.dart';
+import 'package:muscletracking_app/front_page.dart';
+import 'package:muscletracking_app/pages/login/sign_up_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unicons/unicons.dart';
 
@@ -16,79 +18,79 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   loginButton() {
-    setState(() {
-      showErrorMenu = true;
-      if (usernameField.text.isEmpty) {
-        showErrorMenu = true;
-        usernameMissing = true;
-        errorMessage = "Missing username";
-        return;
-      } else if (passwordField.text.isEmpty) {
-        showErrorMenu = true;
-        passwordMissing = true;
-        errorMessage = "Missing password";
-        return;
-      } else {
-        showErrorMenu = false;
-        loginProcess();
-      }
-    });
+    //function when the button is clicked
+    if (usernameField.text.isEmpty) {
+      errorMessage(
+          "Missing username"); //alert the user, the username is missing
+      return;
+    } else if (passwordField.text.isEmpty) {
+      errorMessage(
+          "Missing password"); //alert the user, the username is missing
+      return;
+    } else {
+      loginProcess(); // if both fields are avaliable, then start the login process
+    }
   }
 
   loginProcess() async {
     var loginInformation = await login(usernameField.text, passwordField.text);
-    if (loginInformation == null) {
-      setState(() {
-        wrongCredentials = true;
-        showErrorMenu = true;
-        errorMessage = "Wrong username or password";
-      });
+    //retrieve the server response using the credentials provided.
+    if (loginInformation.isEmpty) {
+      //if the response is empty, then the credentials are wrong
+      errorMessage('Wrong username or password');
     } else {
-      setState(() {
-        String status = loginInformation["status"];
-        int accountNumber = int.parse(loginInformation["account_number"]);
-        String name = loginInformation["name"];
-        setAccountInfo(status, accountNumber, name);
-      });
+      String status = loginInformation["status"];
+      int accountNumber = int.parse(loginInformation["account_number"]);
+      String name = loginInformation["name"];
+      setAccountInfo(
+          status, accountNumber, name); //sets the account information
     }
+  }
+
+  void errorMessage(String message) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertPopUp(text: message, icon: const Icon(UniconsLine.times));
+        });
   }
 
   setAccountInfo(String accountType, int accountNumber, String name) async {
     final SharedPreferences userPreferences =
-        await SharedPreferences.getInstance();
-    userPreferences.setString("account_type", accountType);
-    userPreferences.setString("user_name", name);
-    userPreferences.setInt("account_number", accountNumber);
-    gotoFrontpage();
+        await SharedPreferences.getInstance(); //get the internal data
+    userPreferences.setString("account_type", accountType); //Account type
+    userPreferences.setString("user_name", name); //account's name
+    userPreferences.setInt("account_number", accountNumber); // account number
+    gotoFrontpage(); //then go to the front page
   }
 
-  gotoFrontpage() async {
-    Navigator.pushReplacementNamed(
+  gotoFrontpage() {
+    Navigator.pushReplacement(
       context,
-      '/frontPage',
+      MaterialPageRoute(
+        builder: (context) => const FrontPage(),
+      ),
     );
   }
 
   gotoSignupPage() {
-    Navigator.pushNamed(context, '/signupPage');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignUpPage(),
+      ),
+    );
   }
 
   //---------variables----------
   TextEditingController usernameField = TextEditingController();
   TextEditingController passwordField = TextEditingController();
-  bool usernameMissing = false;
-  bool passwordMissing = false;
-  bool wrongCredentials = false;
-  bool showErrorMenu = false;
-  String name = "";
-  String status = "";
-  String errorMessage = "";
   //----------------------------
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xf9f9f9FF),
+      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -103,12 +105,12 @@ class _WelcomePageState extends State<WelcomePage> {
                   borderRadius: BorderRadius.circular(2)),
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
-                  Text("Welcome",
+                  const SizedBox(height: 20),
+                  Text("MuscleTrack",
                       style:
                           GoogleFonts.acme(fontSize: 45, color: Colors.black)),
-                  const Icon(UniconsLine.linux, size: 60),
-                  const SizedBox(height: 20),
+                  Image.asset("lib/icons/muscleLogo.png", width: 200),
+                  const SizedBox(height: 10),
                   UserInputField(
                     controller: usernameField,
                     isPassword: false,
@@ -125,11 +127,9 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   LongButton(
                     function: loginButton,
-                    backgroundColor: Color.fromARGB(255, 165, 202, 243),
+                    backgroundColor: const Color.fromARGB(255, 165, 202, 243),
                     buttonText: "login",
                   ),
-                  const SizedBox(height: 10),
-                  ErrorBox(warningMessage: errorMessage, show: showErrorMenu),
                   const SizedBox(height: 10),
                 ],
               ),
@@ -139,7 +139,7 @@ class _WelcomePageState extends State<WelcomePage> {
               margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
               decoration: BoxDecoration(
                   color: const Color(0xffffffff),
-                  border: Border.all(width: 2, color: Color(0xffe6e6e6)),
+                  border: Border.all(width: 2, color: const Color(0xffe6e6e6)),
                   borderRadius: BorderRadius.circular(2)),
               child: Column(
                 children: [
@@ -155,6 +155,10 @@ class _WelcomePageState extends State<WelcomePage> {
                   const SizedBox(height: 20)
                 ],
               ),
+            ),
+            Text(
+              DateTime.now().toString().substring(0, 10),
+              style: const TextStyle(fontSize: 20),
             )
           ],
         ),

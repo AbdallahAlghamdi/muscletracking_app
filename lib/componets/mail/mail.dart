@@ -103,15 +103,18 @@ class _MailState extends State<Mail> {
                           text: widget.fromUser,
                           style: const TextStyle(color: Colors.white)),
                     ])),
-                RichText(
-                    text: TextSpan(
-                        text: "To: ",
-                        style: const TextStyle(color: Colors.white60),
-                        children: [
-                      TextSpan(
-                          text: widget.toUser,
-                          style: const TextStyle(color: Colors.white)),
-                    ])),
+                Flexible(
+                  child: RichText(
+                      softWrap: false,
+                      text: TextSpan(
+                          text: "To: ",
+                          style: const TextStyle(color: Colors.white60),
+                          children: [
+                            TextSpan(
+                                text: widget.toUser,
+                                style: const TextStyle(color: Colors.white)),
+                          ])),
+                ),
               ],
             ),
 

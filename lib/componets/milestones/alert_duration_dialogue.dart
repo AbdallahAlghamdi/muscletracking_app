@@ -31,6 +31,7 @@ class _AlertDurationDialogueState extends State<AlertDurationDialogue> {
     return AlertDialog(
       title: const Text("Pick the duration"),
       content: DurationPicker(
+          baseUnit: BaseUnit.second,
           duration: durationPicker,
           onChange: (value) {
             setState(() {

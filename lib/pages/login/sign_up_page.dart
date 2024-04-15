@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:muscletracking_app/componets/error_box.dart';
+import 'package:muscletracking_app/componets/alert_pop_up.dart';
 import 'package:muscletracking_app/componets/long_button.dart';
-import 'package:muscletracking_app/componets/patient_or_physician.dart';
+import 'package:muscletracking_app/componets/account_type_selection.dart';
 import 'package:muscletracking_app/componets/user_input_field.dart';
 import 'package:muscletracking_app/componets/online/database.dart';
 import 'package:unicons/unicons.dart';
@@ -35,54 +35,43 @@ class _SignUpPageState extends State<SignUpPage> {
       signupButtonDisabled = true;
     });
     if (accountNameField.text.isEmpty) {
-      setState(() {
-        showError = true;
-        errorMessage = "Name is empty";
-      });
+      popUpMessages("Name is empty");
     } else if (usernameField.text.isEmpty) {
-      setState(() {
-        showError = true;
-        errorMessage = "Username is empty";
-      });
+      popUpMessages("Username is empty");
     } else if (passwordField.text.isEmpty) {
-      setState(() {
-        showError = true;
-        errorMessage = "Password is empty";
-      });
+      popUpMessages("Password is empty");
     } else {
-      setState(() {
-        showError = false;
-      });
       String accountType = "";
       if (selectedOption[0]) {
         accountType = "patient";
       } else {
         accountType = "doctor";
       }
-
-      print("accountType: $accountType");
-      print("name: ${accountNameField.text}");
-
-      print("Username: ${usernameField.text}");
-      print("Password: ${passwordField.text}");
       bool registrationSuccessful = await newAccount(usernameField.text,
           passwordField.text, accountNameField.text, accountType);
-      if (!registrationSuccessful) {
-        setState(() {
-          errorMessage = "Username Taken";
-          showError = true;
-        });
-      } else {
-        gotoSuccesfulRegistration();
-      }
+      checkStatus(registrationSuccessful);
     }
     setState(() {
       signupButtonDisabled = false;
     });
   }
 
-  gotoSuccesfulRegistration() {
-    Navigator.pushReplacementNamed(context, '/sucreg');
+  checkStatus(bool registrationSuccessful) {
+    if (!registrationSuccessful) {
+      popUpMessages("Username Taken!");
+    } else {
+      Navigator.pop(context);
+      popUpMessages("your account has been successfully created!");
+    }
+  }
+
+  popUpMessages(String message) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertPopUp(
+              text: message, icon: const Icon(Icons.account_box_rounded));
+        });
   }
 
   //--------variables-----------
@@ -90,9 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController usernameField = TextEditingController();
   TextEditingController accountNameField = TextEditingController();
   TextEditingController passwordField = TextEditingController();
-  String errorMessage = "";
   bool isAccountTypeSelected = false;
-  bool showError = false;
   bool signupButtonDisabled = false;
   //--------variables-----------
 
@@ -110,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
             const SizedBox(height: 20),
             const Text("Select account type", style: TextStyle(fontSize: 25)),
             const SizedBox(height: 20),
-            PatientOrPhysician(
+            AccountTypeSelection(
                 changeToggle: changeToggle, selectedOption: selectedOption),
             Visibility(
               visible: isAccountTypeSelected,
@@ -141,7 +128,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     fieldName: "Password",
                     maxLength: 16,
                   ),
-                  ErrorBox(warningMessage: errorMessage, show: showError),
                 ],
               ),
             ),
