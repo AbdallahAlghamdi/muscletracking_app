@@ -55,7 +55,7 @@ class _PatientMilestonePageState extends State<PatientMilestonePage> {
           builder: (context) => SendMail(
                 recipients: [
                   MessageRecipient(
-                      name: widget.patientName, recipientID: widget.patientID)
+                      name: widget.patientName, recipientID: widget.patientID),
                 ],
                 accountNumber: widget.doctorID,
               )),

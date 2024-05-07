@@ -94,44 +94,47 @@ class _NotificationHubState extends State<NotificationHub> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Visibility(
-        visible: isLoaded,
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            Text("Welcome $accountName", style: const TextStyle(fontSize: 25)),
-            Visibility(
-                visible: messagesLoaded,
-                child: MailNotification(
-                  isMessageLoaded: messagesLoaded,
-                  notificationCount: notificationCount,
-                )),
-            Visibility(
-              replacement: ElevatedButton(
-                  onPressed: () {
-                    gotoSummaryDetails(accountNumber);
-                  },
-                  child: const Text(
-                    "View milestone",
-                    style: TextStyle(color: Colors.deepPurple),
+    return SafeArea(
+      child: Center(
+        child: Visibility(
+          visible: isLoaded,
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Text("Welcome $accountName",
+                  style: const TextStyle(fontSize: 25)),
+              Visibility(
+                  visible: messagesLoaded,
+                  child: MailNotification(
+                    isMessageLoaded: messagesLoaded,
+                    notificationCount: notificationCount,
                   )),
-              visible: !isPatient,
-              child: Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 40, right: 40),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => gotoSummaryDetails(index),
-                      child: MilestonePatientSummary(
-                          patientData: patientsProgress[index]),
+              Visibility(
+                replacement: ElevatedButton(
+                    onPressed: () {
+                      gotoSummaryDetails(accountNumber);
+                    },
+                    child: const Text(
+                      "View milestone",
+                      style: TextStyle(color: Colors.deepPurple),
+                    )),
+                visible: !isPatient,
+                child: Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 40, right: 40),
+                    child: ListView.builder(
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => gotoSummaryDetails(index),
+                        child: MilestonePatientSummary(
+                            patientData: patientsProgress[index]),
+                      ),
+                      itemCount: patientsProgress.length,
                     ),
-                    itemCount: patientsProgress.length,
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

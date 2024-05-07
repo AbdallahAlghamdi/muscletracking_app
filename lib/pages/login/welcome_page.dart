@@ -89,78 +89,81 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                  left: 25, top: 40, right: 25, bottom: 25),
-              decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  border: Border.all(width: 2, color: const Color(0xffe6e6e6)),
-                  borderRadius: BorderRadius.circular(2)),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text("MuscleTrack",
-                      style:
-                          GoogleFonts.acme(fontSize: 45, color: Colors.black)),
-                  Image.asset("lib/icons/muscleLogo.png", width: 200),
-                  const SizedBox(height: 10),
-                  UserInputField(
-                    controller: usernameField,
-                    isPassword: false,
-                    icon: UniconsLine.user,
-                    fieldName: "Username",
-                    maxLength: 16,
-                  ),
-                  UserInputField(
-                    controller: passwordField,
-                    isPassword: true,
-                    icon: UniconsLine.keyhole_circle,
-                    fieldName: "Password",
-                    maxLength: 16,
-                  ),
-                  LongButton(
-                    function: loginButton,
-                    backgroundColor: const Color.fromARGB(255, 165, 202, 243),
-                    buttonText: "login",
-                  ),
-                  const SizedBox(height: 10),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 25, top: 20, right: 25, bottom: 25),
+                decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    border:
+                        Border.all(width: 2, color: const Color(0xffe6e6e6)),
+                    borderRadius: BorderRadius.circular(2)),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Text("MuscleTrack",
+                        style: GoogleFonts.acme(
+                            fontSize: 45, color: Colors.black)),
+                    Image.asset("lib/icons/muscleLogo.png", width: 200),
+                    const SizedBox(height: 10),
+                    UserInputField(
+                      controller: usernameField,
+                      isPassword: false,
+                      icon: UniconsLine.mailbox,
+                      fieldName: "Username",
+                      maxLength: 16,
+                    ),
+                    UserInputField(
+                      controller: passwordField,
+                      isPassword: true,
+                      icon: UniconsLine.keyhole_circle,
+                      fieldName: "Password",
+                      maxLength: 16,
+                    ),
+                    LongButton(
+                      function: loginButton,
+                      backgroundColor: const Color.fromARGB(255, 165, 202, 243),
+                      buttonText: "login",
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-              decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  border: Border.all(width: 2, color: const Color(0xffe6e6e6)),
-                  borderRadius: BorderRadius.circular(2)),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  const Text("Don't have an account?",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300)),
-                  LongButton(
-                      function: gotoSignupPage,
-                      buttonText: "Signup",
-                      backgroundColor:
-                          const Color.fromARGB(255, 221, 191, 191)),
-                  const SizedBox(height: 20)
-                ],
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+                decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    border:
+                        Border.all(width: 2, color: const Color(0xffe6e6e6)),
+                    borderRadius: BorderRadius.circular(2)),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const Text("Don't have an account?",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300)),
+                    LongButton(
+                        function: gotoSignupPage,
+                        buttonText: "Signup",
+                        backgroundColor:
+                            const Color.fromARGB(255, 221, 191, 191)),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-            Text(
-              DateTime.now().toString().substring(0, 10),
-              style: const TextStyle(fontSize: 20),
-            )
-          ],
+              Text(
+                DateTime.now().toString().substring(0, 10),
+                style: const TextStyle(fontSize: 20),
+              )
+            ],
+          ),
         ),
       ),
     );

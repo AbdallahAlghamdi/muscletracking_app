@@ -31,9 +31,11 @@ class _MessageState extends State<MessageHub> {
         tempRecipients.add(
             MessageRecipient(name: element.value, recipientID: element.key));
       }
-      setState(() {
-        recipients = tempRecipients;
-      });
+      if (mounted) {
+        setState(() {
+          recipients = tempRecipients;
+        });
+      }
     }
   }
 

@@ -221,7 +221,10 @@ class _PhysicianReportState extends State<PhysicianReport> {
                         MaterialStatePropertyAll(Colors.deepPurple)),
                 child: const Text("Message patient",
                     style: TextStyle(color: Colors.white)),
-              )
+              ),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ),
         )

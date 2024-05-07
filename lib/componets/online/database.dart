@@ -79,11 +79,13 @@ Future<Map<int, String>> getUserRecipients(int accountNumber) async {
   //patients can only send a message to a physician, but physicians can message
   //many patients.
   Map<int, String> result = {};
+
   var tempBody = await getData('/getRecipients/$accountNumber');
   if (tempBody.isEmpty) {
     return {};
   }
   var body = jsonDecode(tempBody);
+  print(body);
   for (var element in body) {
     result[element["account_number"]] = element["_name"];
   }
@@ -111,6 +113,7 @@ Future<Map<String, dynamic>> login(String username, String password) async {
   //Start the login process if the request is successful
   //it would return the account's information
   var tempBody = await getData('/login/$username/$password');
+
   if (tempBody.isEmpty) {
     return {};
   } else {
@@ -148,7 +151,6 @@ newExercise(int accountNumber, double average, String muscleGroup,
     List<int> numbers, int duration) {
   //submits new exercise session to the server
   Map<String, dynamic> finalJson = {};
-  //Sends a request to make a new account.
 
   finalJson["account_number"] = accountNumber;
   finalJson["average_data"] = average;
@@ -196,6 +198,7 @@ Future<List<Patient>> getPatientsNames(int physicianID) async {
     return [];
   }
   var body = jsonDecode(tempBody);
+  print("BODY: $body");
   for (var element in body) {
     //Go through each returned patient and add it to a list of Patient object
     patientList.add(Patient(element["_name"], element['account_number']));
