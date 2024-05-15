@@ -198,7 +198,6 @@ class _PhysicianReportState extends State<PhysicianReport> {
                 muscleName: muscleSelectedGroup,
                 duration: duration,
               ),
-              const SizedBox(height: 15),
               GraphData(data: data),
               Visibility(
                 visible: isDataAvaliable,

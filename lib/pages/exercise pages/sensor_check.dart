@@ -31,8 +31,6 @@ class _SensorCheckState extends State<SensorCheck> {
     }
   }
 
-  goToExerciseSession() {}
-
   String getTitle() {
     String firstCharacter = widget.muscleGroup[0];
     String restOfString = widget.muscleGroup.substring(1).toLowerCase();

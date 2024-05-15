@@ -63,7 +63,6 @@ class PatientCondition extends StatelessWidget {
     String getCosistencyMessage() {
       if (data.length > 1) {
         double coefficient = getCorreCoefficent();
-        print(coefficient);
         if (coefficient > 0.85) {
           animation = "lib/icons/reactions/amazing.json";
           return "Great progress";
@@ -84,20 +83,21 @@ class PatientCondition extends StatelessWidget {
     return Visibility(
       visible: data.length > 2,
       replacement: Container(
+        margin: const EdgeInsets.only(bottom: 15),
         width: double.infinity,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: Colors.deepPurpleAccent,
             borderRadius: BorderRadius.circular(8)),
         child: const Text(
-          "Not enough data!",
+          "Not enough data to give a summary.",
           style: TextStyle(color: Colors.white),
         ),
       ),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(15),
-        margin: const EdgeInsets.only(bottom: 40),
+        margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
             color: Colors.deepPurpleAccent,
             borderRadius: BorderRadius.circular(8)),

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Muscle Tracking App',
+      title: 'Muscle 1Tracking App',
       initialRoute: '/',
       home: WelcomePage(),
     );

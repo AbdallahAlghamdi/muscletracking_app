@@ -19,7 +19,7 @@ class _MessageState extends State<MessageHub> {
   int? accountNumber;
   List<MessageRecipient> recipients = [];
   List<Mail> mail = [];
-  String isOutbound = "";
+  String isInbox = "inbox";
 
   getRecipients() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -43,6 +43,7 @@ class _MessageState extends State<MessageHub> {
   void initState() {
     super.initState();
     getRecipients();
+    getMailMessages(isInbox);
   }
 
   getMailMessages(String mailType) async {
@@ -65,11 +66,11 @@ class _MessageState extends State<MessageHub> {
   toggleButtonChanged(Set<String> input) {
     if (input.isNotEmpty) {
       setState(() {
-        isOutbound = input.first;
+        isInbox = input.first;
         mail = [];
       });
 
-      getMailMessages(isOutbound);
+      getMailMessages(isInbox);
     }
   }
 
@@ -91,8 +92,7 @@ class _MessageState extends State<MessageHub> {
     return SafeArea(
       child: Column(
         children: [
-          ToggleButtonMail(
-              isOutBound: isOutbound, function: toggleButtonChanged),
+          ToggleButtonMail(isOutBound: isInbox, function: toggleButtonChanged),
           MailList(mail: mail),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

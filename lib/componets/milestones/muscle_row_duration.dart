@@ -90,7 +90,6 @@ class _MuscleRowMilestoneState extends State<MuscleRowMilestone> {
                         muscleGroup: widget.muscleGroup,
                         durationIndex: widget.durationIndex,
                       )).then((value) {
-                print("value: $value");
                 if (value.toString() != "Cancel" || value == null) {
                   setState(() {
                     time = Duration(seconds: value);

@@ -85,7 +85,6 @@ Future<Map<int, String>> getUserRecipients(int accountNumber) async {
     return {};
   }
   var body = jsonDecode(tempBody);
-  print(body);
   for (var element in body) {
     result[element["account_number"]] = element["_name"];
   }
@@ -198,7 +197,6 @@ Future<List<Patient>> getPatientsNames(int physicianID) async {
     return [];
   }
   var body = jsonDecode(tempBody);
-  print("BODY: $body");
   for (var element in body) {
     //Go through each returned patient and add it to a list of Patient object
     patientList.add(Patient(element["_name"], element['account_number']));
@@ -328,7 +326,6 @@ int getMuscleIndex(String muscleGroup) {
 sendNewMilestone(
     int newMilestone, int patientID, String muscleGroup, String durationIndex) {
   //inserts new milestones
-  print("test");
   postData({},
       "/newMilestone/$patientID/$newMilestone/${muscleGroup.toUpperCase()}/$durationIndex");
 }

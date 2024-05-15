@@ -14,7 +14,8 @@ class ToggleButtonMail extends StatelessWidget {
       width: double.infinity, //takes all possible width
       margin: const EdgeInsets.all(25), //adds margin
       child: SegmentedButton<String>(
-          emptySelectionAllowed: true, // allows for neither option to be picked
+          emptySelectionAllowed:
+              false, // allows for neither option to be picked
           style: TextButton.styleFrom(
             backgroundColor: Colors.deepPurple,
             disabledBackgroundColor: Colors.grey,

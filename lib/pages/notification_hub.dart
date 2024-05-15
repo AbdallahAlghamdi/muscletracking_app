@@ -100,9 +100,12 @@ class _NotificationHubState extends State<NotificationHub> {
           visible: isLoaded,
           child: Column(
             children: [
-              const SizedBox(height: 10),
-              Text("Welcome $accountName",
-                  style: const TextStyle(fontSize: 25)),
+              Flexible(
+                  child: Container(
+                margin: const EdgeInsets.only(left: 20, right: 20),
+                child: Text("Welcome $accountName",
+                    style: const TextStyle(fontSize: 20)),
+              )),
               Visibility(
                   visible: messagesLoaded,
                   child: MailNotification(
@@ -120,8 +123,9 @@ class _NotificationHubState extends State<NotificationHub> {
                     )),
                 visible: !isPatient,
                 child: Expanded(
+                  flex: 20,
                   child: Container(
-                    margin: const EdgeInsets.only(left: 40, right: 40),
+                    margin: const EdgeInsets.only(left: 20, right: 20),
                     child: ListView.builder(
                       itemBuilder: (context, index) => GestureDetector(
                         onTap: () => gotoSummaryDetails(index),
